@@ -1,0 +1,6 @@
+<mat-nav-list>
+    <ng-container *ngFor="let choice of prompt.choices"> 
+        <a *ngIf="choice.type != 'separator'" mat-list-item (click)="select(choice)"> {{ choice.name }} </a>
+        <mat-divider *ngIf="choice.type == 'separator'"></mat-divider>
+    </ng-container>
+</mat-nav-list>
