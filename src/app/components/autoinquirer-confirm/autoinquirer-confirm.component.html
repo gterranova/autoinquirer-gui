@@ -1,0 +1,8 @@
+<div style="text-align:center">
+    <h1>
+        {{ prompt.message }}
+    </h1>
+</div>
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+    <mat-slide-toggle [checked]="prompt.default" [disabled]="prompt.disabled" formControlName="value" (change)="onSubmit()">{{ prompt.message }}</mat-slide-toggle>
+</form>
