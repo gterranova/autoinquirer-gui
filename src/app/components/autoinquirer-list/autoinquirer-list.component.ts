@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IPrompt, PromptComponent } from 'src/app/models';
+import { PromptComponent, IPrompt, IState, Action } from 'src/app/models';
 import { PromptService } from 'src/app/prompt.service';
 import { Router } from '@angular/router';
 
@@ -18,9 +18,16 @@ export class AutoinquirerListComponent implements PromptComponent, OnInit {
   }
 
   select(selection: any) {
-    //this.promptService.answer({ name: 'state', answer: selection.value});
-    if (!selection.disabled) {
-      this.router.navigate(['/', ...selection.value.path.split('/')]);
+    if (typeof selection ==='string') {
+      const data = { name: 'state', answer: { type: Action.SET, ...this.promptService.getStatus()}, value: selection };
+      this.promptService.answer(data);
+    } else if (!selection.disabled) {
+      if (!selection.value.type || selection.value.type != Action.GET) {
+        this.router.navigate(['/', ...selection.value.path.split('/')]);
+      } else {
+        const data = { name: 'state', answer: selection.value };
+        this.promptService.answer(data);
+      }
     }
   }
 

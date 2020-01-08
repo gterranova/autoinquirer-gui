@@ -5,7 +5,7 @@
   </div>
   <mat-nav-list>
     <ng-container *ngFor="let choice of prompt.choices"> 
-        <mat-list-item *ngIf="choice.type != 'separator'" [class.disabled]="choice.disabled" (click)="select(choice)"> {{ choice.name }} </mat-list-item>
+        <mat-list-item *ngIf="choice.type != 'separator'" [class.disabled]="choice.disabled" (click)="select(choice)"> {{ choice.name || choice }} </mat-list-item>
         <mat-divider *ngIf="choice.type == 'separator'"></mat-divider>
     </ng-container>
 </mat-nav-list>
