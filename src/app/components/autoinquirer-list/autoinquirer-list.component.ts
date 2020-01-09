@@ -18,16 +18,8 @@ export class AutoinquirerListComponent implements PromptComponent, OnInit {
   }
 
   select(selection: any) {
-    if (typeof selection ==='string') {
-      const data = { name: 'state', answer: { type: Action.SET, ...this.promptService.getStatus()}, value: selection };
-      this.promptService.answer(data);
-    } else if (!selection.disabled) {
-      if (!selection.value.type || selection.value.type != Action.GET) {
-        this.router.navigate(['/', ...selection.value.path.split('/')]);
-      } else {
-        const data = { name: 'state', answer: selection.value };
-        this.promptService.answer(data);
-      }
+    if (!!!selection.disabled) {
+      this.router.navigate(['/', ...selection.value.path.split('/')]);
     }
   }
 
