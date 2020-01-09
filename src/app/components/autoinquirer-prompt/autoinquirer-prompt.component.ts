@@ -30,6 +30,9 @@ export class AutoinquirerPromptComponent implements OnInit {
     }
   
     setupComponent(data: IPrompt) {
+      if (data.type === 'list' && data.choices.every( choice => typeof choice === 'string' || choice.hasOwnProperty('value'))) {
+        data.type = 'select';
+      }
       const componentType = ComponentTypes[data.type];
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
       const viewContainerRef = this.promptHost.viewContainerRef;

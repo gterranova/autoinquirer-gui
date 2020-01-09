@@ -2,12 +2,14 @@ import { AutoinquirerListComponent } from './autoinquirer-list/autoinquirer-list
 import { AutoinquirerInputComponent } from './autoinquirer-input/autoinquirer-input.component';
 import { AutoinquirerConfirmComponent } from './autoinquirer-confirm/autoinquirer-confirm.component';
 import { AutoinquirerCheckboxComponent } from './autoinquirer-checkbox/autoinquirer-checkbox.component';
+import { AutoinquirerSelectComponent } from './autoinquirer-select/autoinquirer-select.component';
 
 export const DYNAMIC_COMPONENTS = [
     AutoinquirerListComponent,
     AutoinquirerInputComponent,
     AutoinquirerConfirmComponent,
     AutoinquirerCheckboxComponent,
+    AutoinquirerSelectComponent,
 ];
 
 export const ComponentTypes = {
@@ -15,4 +17,5 @@ export const ComponentTypes = {
     'input': AutoinquirerInputComponent,
     'confirm': AutoinquirerConfirmComponent,
     'checkbox': AutoinquirerCheckboxComponent,
+    'select': AutoinquirerSelectComponent,
 };

@@ -4,11 +4,13 @@
     </h1>
 </div>
 <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
-<mat-selection-list formControlName="value">
-    <mat-list-option [value]="choice.value || choice" *ngFor="let choice of prompt.choices">
-        {{choice.name || choice.value || choice}}
-    </mat-list-option>
-</mat-selection-list>
+    <mat-form-field class="full-width">
+        <mat-select formControlName="value">
+            <mat-option [value]="choice.value || choice" *ngFor="let choice of prompt.choices">
+                {{choice.name || choice}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </form>
 <div class="full-width">
     <button mat-button color="primary" (click)="onSubmit()">Update</button>
