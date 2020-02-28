@@ -1,0 +1,14 @@
+<div style="text-align:center">
+    <h1>
+        {{ prompt.message }}
+    </h1>
+</div>
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+        <textarea matInput [placeholder]="prompt.message" formControlName="value"></textarea>
+    </mat-form-field>
+</form>
+<div class="full-width">
+    <button mat-button color="primary" (click)="onSubmit()">Update</button>
+    <button mat-button (click)="onCancel($event)">Cancel</button>
+</div>
