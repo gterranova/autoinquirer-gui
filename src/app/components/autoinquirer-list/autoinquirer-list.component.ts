@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { PromptComponent, IPrompt, IState, Action } from 'src/app/models';
 import { PromptService } from 'src/app/prompt.service';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-autoinquirer-list',
@@ -10,6 +11,12 @@ import { Router } from '@angular/router';
 })
 export class AutoinquirerListComponent implements PromptComponent, OnInit {
   prompt: IPrompt;
+
+  form = new FormGroup({});
+
+  onSubmit(v) {
+    console.log(v);
+  }  
 
   constructor(private promptService: PromptService,
     private router: Router) { }

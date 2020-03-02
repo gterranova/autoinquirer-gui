@@ -1,11 +1,16 @@
 <div style="text-align:center">
-    <h1>
-      {{ prompt.message }}
-    </h1>
-  </div>
-  <mat-nav-list>
-    <ng-container *ngFor="let choice of prompt.choices"> 
-        <mat-list-item *ngIf="choice.type != 'separator'" [class.disabled]="choice.disabled" (click)="select(choice)"> {{ choice.name || choice }} </mat-list-item>
-        <mat-divider *ngIf="choice.type == 'separator'"></mat-divider>
-    </ng-container>
+  <h1>
+    {{ prompt.message }}
+  </h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit(prompt.model)">
+    <formly-form [form]="form" [fields]="prompt.fields" [model]="prompt.model"></formly-form>
+    <button mat-button color="primary" type="submit">Submit</button>
+  </form>  
+</div>
+<mat-nav-list>
+  <ng-container *ngFor="let choice of prompt.choices">
+    <mat-list-item *ngIf="choice.type != 'separator'" [class.disabled]="choice.disabled" (click)="select(choice)">
+      {{ choice.name || choice }} </mat-list-item>
+    <mat-divider *ngIf="choice.type == 'separator'"></mat-divider>
+  </ng-container>
 </mat-nav-list>

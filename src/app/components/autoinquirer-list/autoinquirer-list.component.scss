@@ -5,6 +5,10 @@
     border-radius: 5px;
 }
 
+form {
+    margin: 10px;
+}
+
 mat-list-item.disabled{
     cursor: not-allowed !important;
     opacity: 0.5;
