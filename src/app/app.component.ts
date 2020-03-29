@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private promptService: PromptService) { }
 
   ngOnInit() {
-    this.prompt = this.promptService.currentPrompt;
+    //this.prompt = this.promptService.currentPrompt;
   }
 
   ngOnDestroy() {

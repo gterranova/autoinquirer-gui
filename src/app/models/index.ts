@@ -43,6 +43,12 @@ export interface IPrompt {
     path?: string;
 }
 
+export interface Item extends IPrompt {
+    schema: any;
+    model: any;
+    fields: any;
+};
+  
 export interface IFeedBack {
     name: string;
     answer: any;

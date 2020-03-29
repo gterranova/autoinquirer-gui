@@ -1,30 +1,98 @@
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { IPrompt, IAnswer, IFeedBack, IState } from './models';
+import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
+//import { Socket } from 'ngx-socket-io';
+import { Item, IAnswer, IFeedBack, IState } from './models';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PromptService {
-  currentPrompt = this.socket.fromEvent<IPrompt>('prompt');
-  currentStatus: IState;
+  //currentPrompt = this.socket.fromEvent<Item>('prompt');
+  currentStatus: IState = { path: ''};
 
-  constructor(private socket: Socket) { }
+  private baseUrl = '';
+  private prefix = '/api/';
 
-  setStatus(status: IState) {
-    this.currentStatus = status;
+  constructor(
+    private http: HttpClient, 
+    //private socket: Socket,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject('serverUrl') protected serverUrl: string,
+    private router: Router) {
+    this.baseUrl = isPlatformBrowser(this.platformId)? this.baseUrl : this.serverUrl;
   }
 
-  getStatus() {
-    return this.currentStatus;
-  }
 
+  navigate(path: string) {
+    this.router.navigate([...path.split('/')]);
+  }
+  /*
   answer(answer: IFeedBack | IAnswer) {
     if (typeof answer === typeof <IFeedBack>{} && (<IFeedBack>answer).name === 'state') {
       this.setStatus((<IFeedBack>answer).answer);
     } else if (typeof answer === typeof <IAnswer>{}) {
       this.setStatus((<IAnswer>answer).state);
     }
-    this.socket.emit('answer', answer);
+    //this.socket.emit('answer', answer);
   }
+  */
+  private createRequestHeader() {
+    // set headers here e.g.
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return headers;
+  }
+
+  public request(
+    method: 'get' | 'push' | 'set' | 'update' | 'del',
+    itemPath: string,
+    ...args: any[]
+  ) {
+    let params, value;
+    if (method === 'get' || method === 'del' && args.length > 0) {
+      params = args.pop();
+    } else if (args.length > 1) {
+      params = args.pop();
+    }
+    if (args.length > 0) {
+      value = args.shift();
+    }
+    const options = { headers: this.createRequestHeader(), params };
+    switch (method) {
+      case 'get':
+        return this.http.get(
+          `${this.baseUrl}${this.prefix}${itemPath}`,
+          options
+        );
+      case 'push':
+        return this.http.post(
+          `${this.baseUrl}${this.prefix}${itemPath}`,
+          JSON.stringify(value),
+          options
+        );
+      case 'set':
+        return this.http.put(
+          `${this.baseUrl}${this.prefix}${itemPath}`,
+          JSON.stringify(value),
+          options
+        );
+      case 'update':
+        return this.http.patch(
+          `${this.baseUrl}${this.prefix}${itemPath}`,
+          JSON.stringify(value),
+          options
+        );
+      case 'del':
+        return this.http.delete(
+          `${this.baseUrl}${this.prefix}${itemPath}`,
+          options
+        );
+      default:
+    }
+    throw new Error(`Unknown method ${method}`);
+  }
+
 }

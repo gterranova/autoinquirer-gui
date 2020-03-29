@@ -1,6 +1,6 @@
 import { NgModule, Injectable } from '@angular/core';
 import { Routes, RouterModule, Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AutoinquirerPromptComponent } from './components';
+import { DynamicContainer } from './components';
 import { PromptService } from './prompt.service';
 
 @Injectable({
@@ -11,21 +11,23 @@ export class PathResolveService implements Resolve<any> {
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const path = state.url.slice(1);
-    this.promptService.answer({ name: 'state', answer: { path }});
+    //this.promptService.answer({ name: 'state', answer: { path }});
+    return await this.promptService.request('get', path).toPromise();
   }
 }
 
 const routes: Routes = [
   {
     path: '**',
-    component: AutoinquirerPromptComponent,
+    component: DynamicContainer,
     resolve: { promptInfo: PathResolveService },
+    runGuardsAndResolvers: 'always',
     data: {}
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload', urlUpdateStrategy: 'deferred' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
