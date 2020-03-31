@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PromptComponent, Item, Action } from 'src/app/models';
+import { Component, OnInit } from '@angular/core';
+import { PromptComponent, IServerResponse, Action } from 'src/app/models';
 import { FormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -8,24 +8,14 @@ import { debounceTime, skip } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { PromptService } from 'src/app/prompt.service';
 
-export function getType(value: any): string {
-  // tslint:disable-next-line:no-reserved-keywords
-  const type = typeof value;
-  if (type === 'object') {
-      return value ? Object.prototype.toString.call(value).slice(8, -1) : 'null';
-  }
-
-  return type;
-}
-
 @Component({
   selector: 'app-autoinquirer-form',
   templateUrl: './autoinquirer-form.component.html',
   styleUrls: ['./autoinquirer-form.component.scss']
 })
 export class AutoinquirerFormComponent implements PromptComponent, OnInit {
-  prompt: Item;
-  fields: any[];
+  prompt: IServerResponse;
+  fields: FormlyFieldConfig[];
   lastValues: any;
 
   form = new FormGroup({});

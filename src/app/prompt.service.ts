@@ -1,6 +1,5 @@
 import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
 //import { Socket } from 'ngx-socket-io';
-import { Item, IAnswer, IFeedBack, IState } from './models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
@@ -10,8 +9,6 @@ import { Router } from '@angular/router';
 })
 export class PromptService {
   //currentPrompt = this.socket.fromEvent<Item>('prompt');
-  currentStatus: IState = { path: ''};
-
   private baseUrl = '';
   private prefix = '/api/';
 
@@ -28,16 +25,7 @@ export class PromptService {
   navigate(path: string) {
     this.router.navigate([...path.split('/')]);
   }
-  /*
-  answer(answer: IFeedBack | IAnswer) {
-    if (typeof answer === typeof <IFeedBack>{} && (<IFeedBack>answer).name === 'state') {
-      this.setStatus((<IFeedBack>answer).answer);
-    } else if (typeof answer === typeof <IAnswer>{}) {
-      this.setStatus((<IAnswer>answer).state);
-    }
-    //this.socket.emit('answer', answer);
-  }
-  */
+
   private createRequestHeader() {
     // set headers here e.g.
     const headers = new HttpHeaders({

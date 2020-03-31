@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver, Input } from '@angular/core';
-import { Item, PromptComponent } from 'src/app/models';
+import { IServerResponse, PromptComponent } from 'src/app/models';
 import { Directive, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -41,7 +41,7 @@ export class PromptHostDirective {
 })
 export class DynamicComponent implements OnInit {
   @ViewChild(PromptHostDirective, { static: true }) promptHost: PromptHostDirective;
-  @Input() prompt: Item;
+  @Input() prompt: IServerResponse;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -54,7 +54,7 @@ export class DynamicComponent implements OnInit {
     //});
   }
 
-  setupComponent(data: Item) {
+  setupComponent(data: IServerResponse) {
     if (data) {
       const componentType = ComponentTypes[data.type];
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);

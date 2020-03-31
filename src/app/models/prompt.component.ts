@@ -1,5 +1,5 @@
-import { IPrompt } from '.';
+import { IServerResponse } from '.';
 
 export interface PromptComponent {
-    prompt: IPrompt;
+    prompt: IServerResponse;
 }

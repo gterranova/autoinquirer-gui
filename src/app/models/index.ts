@@ -1,6 +1,8 @@
 // tslint:disable:no-any
 // tslint:disable:no-reserved-keywords
 export { PromptComponent } from './prompt.component';
+import { JSONSchema7, JSONSchema7TypeName } from 'json-schema';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const enum Action {
     BACK='back',
@@ -12,95 +14,24 @@ export const enum Action {
     DEL='del'
 }
 
-export interface IState {
-    path: string;
-    type?: Action | string;
-    errors?: string;
-}
-
-export interface INameValueState {
-    name: string;
-    value: IState | string;
-    disabled?: boolean;
-}
-
-export interface IAnswer {
-    state: IState;
-    value?: any;
-}
-
-export interface IPrompt {
-    name: string;
+export interface IServerResponse {
     type: string;
-    message: string;
-    // tslint:disable-next-line:typedef
-    when?: any | (IAnswer);
-    default?: any | (IAnswer);
-    choices?: any | (IAnswer);
-    pageSize?: number;
-    disabled?: boolean;
-    errors?: any;
     path?: string;
-}
-
-export interface Item extends IPrompt {
-    schema: any;
+    schema: IProperty;
     model: any;
-    fields: any;
+    items: [{ name: string, label: string }];
 };
   
-export interface IFeedBack {
-    name: string;
-    answer: any;
-    value?: any;
-}
-
-export declare type PrimitiveType = number | boolean | string | null;
-
 export interface IProxyInfo {
     proxyName: string;
     params: any;
 }
 
-export interface IProperty {
-    $ref?: string;
-    $schema?: string;
-    $id?: string;
-    description?: string;
-    allOf?: IProperty[];
-    oneOf?: IProperty[];
-    anyOf?: IProperty[];
-    title?: string;
-    type?: string | string[];
-    definitions?: {
-        [key: string]: IProperty;
-    };
-    format?: string;
-    items?: IProperty;
-    minItems?: number;
-    additionalItems?: {
-        anyOf: IProperty[];
-    } | IProperty;
-    enum?: PrimitiveType[] | IProperty[];
-    default?: PrimitiveType | Object;
-    additionalProperties?: IProperty | boolean;
-    required?: string[];
-    propertyOrder?: string[];
-    properties?: {
-        [key: string]: IProperty;
-    };
-    patternProperties?: {
-        [key: string]: IProperty;
-    };
-    defaultProperties?: string[];
-    pattern?: string;
+export interface IProperty extends JSONSchema7 {
     // custom properties
-    readOnly?: boolean;
-    writeOnly?: boolean;
-    typeof?: "function";
     depends?: string;
     $data?: string;
-    $values?: { [key: string]: any};
+    //$values?: { [key: string]: any};
     $proxy?: IProxyInfo;
     $widget?: string;
 }

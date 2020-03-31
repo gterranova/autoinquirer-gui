@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldArrayType } from '@ngx-formly/core';
 import { PromptService } from 'src/app/prompt.service';
-import { Action, Item } from 'src/app/models';
+import { Action, IServerResponse } from 'src/app/models';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
@@ -66,8 +66,8 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
   update() {
     return this.promptService.request(Action.GET, this.to.path).pipe( map((data) => {
       for (let formData of (<any>data).components) {
-        if (<Item>formData && <Item>formData.model && <Item>formData.schema) {
-          this.to.label = (<Item>formData).schema.title;
+        if (<IServerResponse>formData && <IServerResponse>formData.model && <IServerResponse>formData.schema) {
+          this.to.label = (<IServerResponse>formData).schema.title;
           this.dataSource.next(formData.model);
           return formData.model;    
         }

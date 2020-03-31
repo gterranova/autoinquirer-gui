@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PromptComponent, IPrompt, IState, Action } from 'src/app/models';
+import { PromptComponent, IServerResponse } from 'src/app/models';
 import { PromptService } from 'src/app/prompt.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-autoinquirer-breadcrumb',
@@ -10,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./autoinquirer-breadcrumb.component.scss']
 })
 export class AutoinquirerBreadcrumbComponent implements PromptComponent, OnInit {
-  prompt: any;
+  prompt: IServerResponse;
   
   constructor(private promptService: PromptService) { 
   }
@@ -19,7 +17,7 @@ export class AutoinquirerBreadcrumbComponent implements PromptComponent, OnInit 
   }
 
   select(selection?: any) {
-    this.promptService.navigate(selection? selection.path:'/');
+    this.promptService.navigate(selection? selection.value:'/');
   }
 
 }
