@@ -27,11 +27,15 @@ export interface IProxyInfo {
     params: any;
 }
 
+export interface IRelationship {
+    path: string;
+    remoteField?: string;
+}
+
 export interface IProperty extends JSONSchema7 {
     // custom properties
     depends?: string;
-    $data?: string;
-    //$values?: { [key: string]: any};
+    $data?: IRelationship;
     $proxy?: IProxyInfo;
     $widget?: string;
 }
