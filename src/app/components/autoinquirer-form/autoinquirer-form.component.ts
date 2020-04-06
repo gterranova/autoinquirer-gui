@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PromptComponent, IServerResponse, Action } from 'src/app/models';
+import { PromptComponent, IServerResponse, Action, IProperty } from 'src/app/models';
 import { FormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -31,31 +31,46 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
 
   constructor(private formlyJsonschema: FormlyJsonschema, private promptService: PromptService) { }
 
-  private cleanFormData(obj) {
+  private cleanFormData(obj, last: any, schema: IProperty, path: string) {
+    last = last || {};
     const filteredOut = _.clone(obj);
     Object.keys(obj).forEach(key => {  
       // if key has a period, replace all occurences with an underscore
       if (key[0] === '_') {
         delete filteredOut[key];
-      } else if (_.isObject(filteredOut[key])) {
-        filteredOut[key] = this.cleanFormData(filteredOut[key]);
+      } else if (!_.isArray(filteredOut[key]) && _.isObject(filteredOut[key])) {
+        filteredOut[key] = this.cleanFormData(filteredOut[key], last[key], <IProperty>schema.properties[key], path+'/'+key);
         if (!Object.keys(filteredOut[key]).length) {
           delete filteredOut[key];
         }
-      } 
+      } else {
+        let testProperty = <any>schema.properties?.[key];
+        //console.log(key, testProperty)
+        if ((testProperty?.type === 'string' || testProperty?.type === 'array') && 
+              testProperty?.widget?.formlyConfig?.type === 'select' && !_.isEqual(obj[key], last[key]) ) {
+          this.promptService.request(Action.SET, path+'/'+key, filteredOut[key]).toPromise();
+          last[key] = filteredOut[key];
+          delete filteredOut[key];
+        }
+        if (_.isEqual(obj[key], last[key])) {
+          delete filteredOut[key];
+        }
+      }
     });
     return filteredOut;
   }
 
   ngOnInit() {
     this.fields = [this.formlyJsonschema.toFieldConfig(this.prompt.schema, { map: this.fieldMap })];
+    this.lastValues = _.clone(this.prompt.model);
     if (this.prompt.schema.type === 'object') {
-      this.form.valueChanges.pipe(skip(1), debounceTime(3000)).subscribe(async selectedValue => {
-        const cleaned = this.cleanFormData(selectedValue);
-        if (!_.isEqual(this.lastValues, cleaned)) {
-          this.promptService.request(Action.UPDATE, this.prompt.path, cleaned).toPromise();
-          this.lastValues = cleaned;
-        }
+      this.form.valueChanges.pipe(skip(1), debounceTime(1000)).subscribe(async selectedValue => {
+        const cleaned = this.cleanFormData(selectedValue, this.lastValues, this.prompt.schema, this.prompt.path);
+          if (Object.keys(cleaned).length>0) {
+            console.log(cleaned)
+            await this.promptService.request(Action.UPDATE, this.prompt.path, cleaned).toPromise();
+          }
+          this.lastValues = { ...this.lastValues, ...cleaned};  
       });  
     }
   }
