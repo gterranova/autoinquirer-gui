@@ -10,6 +10,8 @@ import { LinkTypeComponent } from './link.type';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
+import { FormlyWrapperFormFieldLink } from './form-field-link.wrapper';
+import { AccordionWrapperComponent } from './accordion.wrapper';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
     return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -58,6 +60,8 @@ export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
     MultiSchemaTypeComponent,
     NullTypeComponent,
     LinkTypeComponent,
+    FormlyWrapperFormFieldLink,
+    AccordionWrapperComponent
   ],
   imports: [
     CommonModule,
@@ -106,6 +110,10 @@ export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
           { name: 'object', component: ObjectTypeComponent },
           { name: 'multischema', component: MultiSchemaTypeComponent },
           { name: 'link', component: LinkTypeComponent },
+        ],
+        wrappers: [
+          { name: 'form-field-link', component: FormlyWrapperFormFieldLink },
+          { name: 'accordion', component: AccordionWrapperComponent }
         ],
       }),
       FormlyMaterialModule

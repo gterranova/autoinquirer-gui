@@ -9,18 +9,7 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 @Component({
   selector: 'formly-array-type',
   template: `
-  <mat-accordion>
-    <mat-expansion-panel [expanded]="topLevel" [disabled]="to.disabled">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <b>{{ to.label }}</b>
-        </mat-panel-title> 
-        <mat-panel-description *ngIf="to.description">
-          {{ to.description }} 
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <table style="width: 100%" mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+    <table style="width: 100%" mat-table [dataSource]="dataSource" class="mat-elevation-z1">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef style="width: 100%"> {{ to.label }} </th>
@@ -38,12 +27,8 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-action-row>
-      <button mat-button color="primary" (click)="pushItem($event)"><mat-icon>add</mat-icon>Add new</button>
+      <button *ngIf="!to.readonly" mat-button color="primary" (click)="pushItem($event)"><mat-icon>add</mat-icon>Add new</button>
     </mat-action-row>    
-    </mat-expansion-panel>
-  </mat-accordion>
-  <br/>
-
   `
 })
 export class ArrayTypeComponent extends FieldArrayType implements OnInit {
@@ -56,6 +41,7 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
   }
   ngOnInit(): void {
     this.dataSource.next(this.model);
+    this.displayedColumns = (this.to.readonly)? ['name'] : ['name', 'actions'];
     this.topLevel = !this.field.parent.parent;
   }
 
@@ -69,6 +55,7 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
         if (<IServerResponse>formData && <IServerResponse>formData.model && <IServerResponse>formData.schema) {
           this.to.label = (<IServerResponse>formData).schema.title;
           this.dataSource.next(formData.model);
+          this.displayedColumns = (formData.schema.readOnly)? ['name'] : ['name', 'actions'];
           return formData.model;    
         }
       } 
