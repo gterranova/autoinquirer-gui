@@ -13,7 +13,27 @@ import { DynamicContainer, DynamicComponent, PromptHostDirective, DYNAMIC_COMPON
 import { HttpClientModule } from '@angular/common/http';
 import { JsonFormlyModule } from './formly/formly.module';
 
+import { MarkedOptions, MarkedRenderer, MarkdownModule } from 'ngx-markdown';
+import { HttpClient } from '@angular/common/http';
+
 //const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
+// function that returns `MarkedOptions` with renderer override
+export function markedOptionsFactory(): MarkedOptions {
+  const renderer = new MarkedRenderer();
+
+  renderer.blockquote = (text: string) => {
+    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
+  };
+
+  return {
+    renderer: renderer,
+    gfm: true,
+    breaks: false,
+    pedantic: false,
+    smartLists: true,
+    smartypants: false,
+  };
+}
 
 @NgModule({
   declarations: [
@@ -31,6 +51,13 @@ import { JsonFormlyModule } from './formly/formly.module';
     HttpClientModule,
     //SocketIoModule.forRoot(config),
     BrowserAnimationsModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: markedOptionsFactory,
+      },
+    }),
     JsonFormlyModule,
   ],
   entryComponents: [

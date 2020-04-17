@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { MarkdownModule } from 'ngx-markdown';
+
 import { NullTypeComponent } from './null.type';
 import { ArrayTypeComponent } from './array.type';
 import { ObjectTypeComponent } from './object.type';
 import { MultiSchemaTypeComponent } from './multischema.type';
 import { LinkTypeComponent } from './link.type';
 import { MaterialModule } from '../material/material.module';
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
 import { FormlyWrapperFormFieldLink } from './form-field-link.wrapper';
 import { AccordionWrapperComponent } from './accordion.wrapper';
+import { MarkdownTypeComponent } from './markdown.type';
+import { LMarkdownEditorModule } from 'ngx-markdown-editor';
+import { FormsModule } from '@angular/forms';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
     return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -61,10 +65,12 @@ export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
     NullTypeComponent,
     LinkTypeComponent,
     FormlyWrapperFormFieldLink,
-    AccordionWrapperComponent
+    AccordionWrapperComponent,
+    MarkdownTypeComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MaterialModule,
     AppRoutingModule,
     FormlyModule.forRoot({
@@ -110,18 +116,23 @@ export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
           { name: 'object', component: ObjectTypeComponent },
           { name: 'multischema', component: MultiSchemaTypeComponent },
           { name: 'link', component: LinkTypeComponent },
+          { name: 'markdown', component: MarkdownTypeComponent }
         ],
         wrappers: [
           { name: 'form-field-link', component: FormlyWrapperFormFieldLink },
           { name: 'accordion', component: AccordionWrapperComponent }
         ],
       }),
-      FormlyMaterialModule
+      FormlyMaterialModule,
+      MarkdownModule.forChild(),
+      LMarkdownEditorModule
   ],
   exports: [
     FormlyModule,
     FormlyMaterialModule,
-    MaterialModule
+    MaterialModule,
+    MarkdownModule,
+    LMarkdownEditorModule
   ]
 })
 export class JsonFormlyModule { }
