@@ -16,47 +16,52 @@ import { AccordionWrapperComponent } from './accordion.wrapper';
 import { MarkdownTypeComponent } from './markdown.type';
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 import { FormsModule } from '@angular/forms';
+import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
-    return `should NOT have fewer than ${field.templateOptions.minItems} items`;
-  }
-  
-  export function maxItemsValidationMessage(err, field: FormlyFieldConfig) {
-    return `should NOT have more than ${field.templateOptions.maxItems} items`;
-  }
-  
-  export function minlengthValidationMessage(err, field: FormlyFieldConfig) {
-    return `should NOT be shorter than ${field.templateOptions.minLength} characters`;
-  }
-  
-  export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
-    return `should NOT be longer than ${field.templateOptions.maxLength} characters`;
-  }
-  
-  export function minValidationMessage(err, field: FormlyFieldConfig) {
-    return `should be >= ${field.templateOptions.min}`;
-  }
-  
-  export function maxValidationMessage(err, field: FormlyFieldConfig) {
-    return `should be <= ${field.templateOptions.max}`;
-  }
-  
-  export function multipleOfValidationMessage(err, field: FormlyFieldConfig) {
-    return `should be multiple of ${field.templateOptions.step}`;
-  }
-  
-  export function exclusiveMinimumValidationMessage(err, field: FormlyFieldConfig) {
-    return `should be > ${field.templateOptions.step}`;
-  }
-  
-  export function exclusiveMaximumValidationMessage(err, field: FormlyFieldConfig) {
-    return `should be < ${field.templateOptions.step}`;
-  }
-  
-  export function constValidationMessage(err, field: FormlyFieldConfig) {
-    return `should be equal to constant "${field.templateOptions.const}"`;
-  }
-  
+  return `should NOT have fewer than ${field.templateOptions.minItems} items`;
+}
+
+export function maxItemsValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT have more than ${field.templateOptions.maxItems} items`;
+}
+
+export function minlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT be shorter than ${field.templateOptions.minLength} characters`;
+}
+
+export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
+  return `should NOT be longer than ${field.templateOptions.maxLength} characters`;
+}
+
+export function minValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be >= ${field.templateOptions.min}`;
+}
+
+export function maxValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be <= ${field.templateOptions.max}`;
+}
+
+export function multipleOfValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be multiple of ${field.templateOptions.step}`;
+}
+
+export function exclusiveMinimumValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be > ${field.templateOptions.step}`;
+}
+
+export function exclusiveMaximumValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be < ${field.templateOptions.step}`;
+}
+
+export function constValidationMessage(err, field: FormlyFieldConfig) {
+  return `should be equal to constant "${field.templateOptions.const}"`;
+}
+
+export function serverValidationMessage(err) {
+  return err;
+}
+
 @NgModule({
   declarations: [
     ArrayTypeComponent,
@@ -88,6 +93,7 @@ export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
           { name: 'maxItems', message: maxItemsValidationMessage },
           { name: 'uniqueItems', message: 'should NOT have duplicate items' },
           { name: 'const', message: constValidationMessage },
+          { name: 'server-error', message: serverValidationMessage },
         ],
         types: [
           { name: 'string', extends: 'input' },
@@ -124,12 +130,14 @@ export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
         ],
       }),
       FormlyMaterialModule,
+      FormlyMatDatepickerModule,
       MarkdownModule.forChild(),
       LMarkdownEditorModule
   ],
   exports: [
     FormlyModule,
     FormlyMaterialModule,
+    FormlyMatDatepickerModule,
     MaterialModule,
     MarkdownModule,
     LMarkdownEditorModule

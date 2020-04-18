@@ -6,6 +6,11 @@ import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 
+interface IArrayItem { 
+  name: string, 
+  path: string
+}
+
 @Component({
   selector: 'formly-array-type',
   template: `
@@ -33,7 +38,7 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 })
 export class ArrayTypeComponent extends FieldArrayType implements OnInit {
   displayedColumns = ['name', 'actions'];
-  dataSource = new BehaviorSubject<{ name: string, path: string}[]>([]);
+  dataSource = new BehaviorSubject<IArrayItem[]>([]);
   topLevel: boolean;
 
   constructor(private promptService: PromptService) {

@@ -3,10 +3,11 @@ import { PromptComponent, IServerResponse, Action, IProperty } from 'src/app/mod
 import { FormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { debounceTime, skip } from 'rxjs/operators';
+import { debounceTime, skip, filter } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import { PromptService } from 'src/app/prompt.service';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-autoinquirer-form',
@@ -34,6 +35,8 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
   private compactValues(myObj, excludeSameFrom = {}) {
     if (_.isArray(myObj)) {
       return _.map(myObj, (o, idx) => this.compactValues(o, excludeSameFrom[idx]) );
+    } else if (myObj instanceof Date || myObj._isAMomentObject) {
+      return myObj.toISOString();
     } else if (_.isObject(myObj)) {
       return _.chain(myObj).map( (value, key) => {
         if (key !== undefined && key[0] !== '_' && value !== null && !_.isEqual(excludeSameFrom[key], value)) {
@@ -70,13 +73,28 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
     this.fields = [this.formlyJsonschema.toFieldConfig(this.prompt.schema, { map: this.fieldMap })];
     this.lastValues = this.compactValues(this.prompt.model);
     if (this.prompt.schema.type === 'object') {
-      this.form.valueChanges.pipe(skip(1), debounceTime(1000)).subscribe(async selectedValue => {
-        const cleaned = this.cleanFormData(this.compactValues(selectedValue, this.lastValues), this.lastValues, this.prompt.schema, this.prompt.path);
+      this.form.valueChanges.pipe(skip(1), filter( () => this.form.valid), debounceTime(1000)).subscribe(async selectedValue => {
+        let cleaned = this.cleanFormData(this.compactValues(selectedValue, this.lastValues), this.lastValues, this.prompt.schema, this.prompt.path);
         if (Object.keys(cleaned).length>0) {
-          //console.log("CLEANED", cleaned)
-          await this.promptService.request(Action.UPDATE, this.prompt.path, cleaned).toPromise();
+          this.promptService.request(Action.UPDATE, this.prompt.path, cleaned).subscribe(
+            newValue => {
+              const compact = this.compactValues(_.pick(newValue, _.keys(cleaned)), this.lastValues);
+              cleaned = this.cleanFormData(compact, this.lastValues, this.prompt.schema, this.prompt.path);
+              this.form.patchValue(cleaned, { emitEvent: false });
+              this.lastValues = _.merge(this.lastValues, cleaned);
+            },
+            ({ error }) => {
+              if (error.ajv) {
+                _.each(error.errors, validationError => {
+                  const fieldPath = validationError.dataPath.replace(/^\./, '');
+                  this.form.get(fieldPath).setErrors({'server-error': validationError.message });
+                  //console.log(this.form, this.form.get(fieldPath));
+                })
+              }
+            }
+          );
         }
-        this.lastValues = _.merge(this.lastValues, cleaned);  
+        this.lastValues = _.merge(this.lastValues, cleaned);
       });  
     }
   }
