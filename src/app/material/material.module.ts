@@ -13,6 +13,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -27,6 +33,11 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
     MatExpansionModule,
     MatIconModule,
     MatNativeDateModule,
+    FlexLayoutModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatGridListModule,
+    MatToolbarModule,
   ],
   exports: [
     MatButtonModule,
@@ -39,6 +50,11 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
     MatExpansionModule,
     MatIconModule,
     MatNativeDateModule,
+    FlexLayoutModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatGridListModule,
+    MatToolbarModule,    
   ],
   providers: [
     // The locale would typically be provided on the root module of your application. We do it at

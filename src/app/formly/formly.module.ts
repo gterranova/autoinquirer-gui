@@ -17,6 +17,7 @@ import { MarkdownTypeComponent } from './markdown.type';
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 import { FormsModule } from '@angular/forms';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
+import { FilesystemWrapperComponent } from './filesystem.wrapper';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -71,7 +72,8 @@ export function serverValidationMessage(err) {
     LinkTypeComponent,
     FormlyWrapperFormFieldLink,
     AccordionWrapperComponent,
-    MarkdownTypeComponent
+    MarkdownTypeComponent,
+    FilesystemWrapperComponent,
   ],
   imports: [
     CommonModule,
@@ -118,15 +120,16 @@ export function serverValidationMessage(err) {
           { name: 'boolean', extends: 'checkbox' },
           { name: 'enum', extends: 'select' },
           { name: 'null', component: NullTypeComponent, wrappers: ['form-field'] },
-          { name: 'array', component: ArrayTypeComponent },
-          { name: 'object', component: ObjectTypeComponent },
+          { name: 'array', component: ArrayTypeComponent, wrappers: ['accordion'] },
+          { name: 'object', component: ObjectTypeComponent, wrappers: ['accordion'] },
           { name: 'multischema', component: MultiSchemaTypeComponent },
           { name: 'link', component: LinkTypeComponent },
           { name: 'markdown', component: MarkdownTypeComponent }
         ],
         wrappers: [
           { name: 'form-field-link', component: FormlyWrapperFormFieldLink },
-          { name: 'accordion', component: AccordionWrapperComponent }
+          { name: 'accordion', component: AccordionWrapperComponent },
+          { name: 'filesystem', component: FilesystemWrapperComponent }
         ],
       }),
       FormlyMaterialModule,
