@@ -123,7 +123,10 @@ export class FormlyWrapperFormFieldLink extends FieldWrapper<MatFormlyFieldConfi
   }
 
   goToPage(value: string) {
-    this.router.navigate(['/', ...value.split('/')]);
+    const selectedOption = (<any[]>this.to.options).find( o => o.value == value );
+    if (selectedOption && selectedOption.path) {
+      this.router.navigate(['/', ...selectedOption.path.split('/')]);
+    }
   }  
 
   get errorState() {

@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 
 //import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
 import { DynamicContainer, DynamicComponent, PromptHostDirective, DYNAMIC_COMPONENTS } from './components';
 import { HttpClientModule } from '@angular/common/http';
 import { JsonFormlyModule } from './formly/formly.module';

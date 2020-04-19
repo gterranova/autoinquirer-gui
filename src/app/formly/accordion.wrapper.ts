@@ -6,7 +6,7 @@ import { FieldWrapper } from '@ngx-formly/core';
 selector: 'formly-wrapper-accordion',
 template: `
 <mat-accordion>
-<mat-expansion-panel [expanded]="!to.disabled" [disabled]="to.disabled">
+<mat-expansion-panel [expanded]="to.expanded" [disabled]="to.disabled">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <b>{{ to.label }}</b>

@@ -37,6 +37,6 @@ export interface IProperty extends JSONSchema7 {
     depends?: string;
     $data?: IRelationship;
     $proxy?: IProxyInfo;
-    $widget?: string;
+    $widget?: { type?: string, wrappers?: string[] };
 }
 
