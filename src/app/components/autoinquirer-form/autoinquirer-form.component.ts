@@ -22,7 +22,7 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
   form = new FormGroup({});
 
   fieldMap(mappedField: FormlyFieldConfig, mapSource: any) : FormlyFieldConfig {
-    mappedField.templateOptions.disabled = mapSource.disabled;
+    mappedField.templateOptions.disabled = mappedField.templateOptions.disabled || mapSource.readOnly;
     return mappedField;
   }
 
