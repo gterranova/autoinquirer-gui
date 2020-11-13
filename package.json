@@ -33,7 +33,7 @@
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "material": "^0.4.3",
     "moment": "^2.24.0",
     "ngx-markdown": "^9.0.0",
