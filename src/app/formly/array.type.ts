@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldArrayType } from '@ngx-formly/core';
-import { PromptService } from 'src/app/prompt.service';
-import { Action, IServerResponse } from 'src/app/models';
+import { PromptService } from '../prompt.service';
+import { Action, IServerResponse } from '../models';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
@@ -47,7 +47,7 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
   ngOnInit(): void {
     this.dataSource.next(this.model);
     this.displayedColumns = (this.to.readonly)? ['name'] : ['name', 'actions'];
-    this.topLevel = !this.field.parent.parent;
+    this.topLevel = !this.field.parent?.parent;
   }
 
   select(selection: any) {
@@ -67,11 +67,11 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
     }));
   }
 
-  pushItem(evt) {
+  pushItem(evt: any) {
     evt.stopPropagation();
 
     this.promptService.request(Action.PUSH, this.to.path, {}).subscribe( () => {
-      this.update().subscribe(model => this.add(null, model[model.length-1]) );
+      this.update().subscribe(model => this.add(undefined, model[model.length-1]) );
     });
   }
 

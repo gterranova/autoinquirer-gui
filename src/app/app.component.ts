@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IServerResponse } from './models';
 import { Observable, Subscription } from 'rxjs';
+import { IServerResponse } from './models';
 import { PromptService } from './prompt.service';
 
 @Component({

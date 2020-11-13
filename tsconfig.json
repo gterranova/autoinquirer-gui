@@ -18,6 +18,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
-  }
+    ],
+    "paths": {
+      "@ngx-juda/*": [
+        "dist/@ngx-juda/*"
+      ]
+    }
+  },
+  "exclude": [
+    "dist/**/*",
+    "node_modules/**/*"
+  ]
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PromptComponent, IServerResponse } from 'src/app/models';
-import { PromptService } from 'src/app/prompt.service';
+import { PromptComponent, IServerResponse } from '../../models';
+import { PromptService } from '../../prompt.service';
 
 @Component({
   selector: 'app-autoinquirer-breadcrumb',
@@ -8,7 +8,7 @@ import { PromptService } from 'src/app/prompt.service';
   styleUrls: ['./autoinquirer-breadcrumb.component.scss']
 })
 export class AutoinquirerBreadcrumbComponent implements PromptComponent, OnInit {
-  prompt: IServerResponse;
+  prompt: any = {};
   
   constructor(private promptService: PromptService) { 
   }

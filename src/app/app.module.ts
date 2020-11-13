@@ -8,12 +8,13 @@ import { AppComponent } from './app.component';
 
 //import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DynamicContainer, DynamicComponent, PromptHostDirective, DYNAMIC_COMPONENTS } from './components';
+//import { DynamicContainer, DynamicComponent, PromptHostDirective, DYNAMIC_COMPONENTS } from './components';
 import { HttpClientModule } from '@angular/common/http';
-import { JsonFormlyModule } from './formly/formly.module';
 
 import { MarkedOptions, MarkedRenderer, MarkdownModule } from 'ngx-markdown';
 import { HttpClient } from '@angular/common/http';
+
+import { CoreModule } from './core.module';
 
 //const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
 // function that returns `MarkedOptions` with renderer override
@@ -37,15 +38,15 @@ export function markedOptionsFactory(): MarkedOptions {
 @NgModule({
   declarations: [
     AppComponent,
-    DynamicContainer,
-    DynamicComponent,
-    PromptHostDirective,
-    ...DYNAMIC_COMPONENTS,
+    //DynamicContainer,
+    //DynamicComponent,
+    //PromptHostDirective,
+    //...DYNAMIC_COMPONENTS,
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
+    BrowserModule, //
+    FormsModule, //
+    ReactiveFormsModule, //
     AppRoutingModule,
     HttpClientModule,
     //SocketIoModule.forRoot(config),
@@ -57,10 +58,10 @@ export function markedOptionsFactory(): MarkedOptions {
         useFactory: markedOptionsFactory,
       },
     }),
-    JsonFormlyModule,
+    CoreModule.forRoot()
   ],
   entryComponents: [
-    ...DYNAMIC_COMPONENTS
+    //...DYNAMIC_COMPONENTS
   ],
   bootstrap: [AppComponent]
 })

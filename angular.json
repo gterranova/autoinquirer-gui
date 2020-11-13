@@ -37,7 +37,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist/autoinquirer-gui",
+            "outputPath": "../autoinquirer-server/dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -172,7 +172,47 @@
           }
         }
       }
+    },
+    "@ngx-juda/auth": {
+      "root": "lib/auth",
+      "sourceRoot": "lib/auth",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "lib/auth/tsconfig.lib.json",
+            "project": "lib/auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "lib/auth/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "lib/auth/src/test.ts",
+            "tsConfig": "lib/auth/tsconfig.spec.json",
+            "karmaConfig": "lib/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "lib/auth/tsconfig.lib.json",
+              "lib/auth/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
-  },
+ },
   "defaultProject": "autoinquirer-gui"
 }

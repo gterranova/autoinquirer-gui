@@ -1,6 +1,5 @@
 // tslint:disable:no-any
 // tslint:disable:no-reserved-keywords
-export { PromptComponent } from './prompt.component';
 import { JSONSchema7, JSONSchema7TypeName } from 'json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
@@ -19,7 +18,7 @@ export interface IServerResponse {
     path?: string;
     schema: IProperty;
     model: any;
-    items: [{ name: string, label: string }];
+    items?: [{ name: string, label: string }];
 };
   
 export interface IProxyInfo {
@@ -39,3 +38,6 @@ export interface IProperty extends JSONSchema7 {
     $widget?: { type?: string, wrappers?: string[] };
 }
 
+export interface PromptComponent {
+    prompt: IServerResponse;
+}

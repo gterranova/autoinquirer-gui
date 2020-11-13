@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
-import { PromptService } from 'src/app/prompt.service';
+import { PromptService } from '../prompt.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
     <div class="mb-3">
       <legend *ngIf="to.label">{{ to.label }}</legend>
       <p *ngIf="to.description">{{ to.description }}</p>
-      <a (click)="select(field.model[field.key])" >{{field.model[field.key].name }}</a>
+      <a *ngIf="field.key" (click)="select(field.model[field.key])" >{{field.model[field.key].name }}</a>
     </div>
   `,
 })

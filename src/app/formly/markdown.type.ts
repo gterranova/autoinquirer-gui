@@ -26,7 +26,7 @@ export class MarkdownTypeComponent extends FieldType {
             if (title) {
               out += ` title="${title}"`;
             }
-            out += (<any>this.mdOptions || {}).xhtml ? "/>" : ">";
+            out += ((<any>this).mdOptions || {}).xhtml ? "/>" : ">";
             return out;
           }
         }
@@ -83,7 +83,7 @@ export class MarkdownTypeComponent extends FieldType {
         });
       }
     
-      onEditorLoaded(editor) {
+      onEditorLoaded(editor: any) {
         //console.log(`ACE Editor Ins: `, editor);
         //console.log(this.formControl)
         // editor.setOption('showLineNumbers', false);

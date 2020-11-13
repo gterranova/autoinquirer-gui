@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver, Input } from '@angular/core';
-import { IServerResponse, PromptComponent } from 'src/app/models';
+import { IServerResponse, PromptComponent } from '../models';
 import { Directive, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AutoinquirerFormComponent } from './autoinquirer-form/autoinquirer-form.component';
 import { AutoinquirerBreadcrumbComponent } from './autoinquirer-breadcrumb/autoinquirer-breadcrumb.component';
+import { AutoinquirerAuthComponent, ForgotPasswordDialog } from './autoinquirer-auth/autoinquirer-auth.component';
+import { AuthenticationService } from '@ngx-juda/auth';
+import { ComponentType } from '@angular/cdk/portal';
+
 //import { AutoinquirerConfirmComponent } from './autoinquirer-confirm/autoinquirer-confirm.component';
 //import { AutoinquirerCheckboxComponent } from './autoinquirer-checkbox/autoinquirer-checkbox.component';
 //import { AutoinquirerSelectComponent } from './autoinquirer-select/autoinquirer-select.component';
@@ -13,15 +17,18 @@ import { AutoinquirerBreadcrumbComponent } from './autoinquirer-breadcrumb/autoi
 export const DYNAMIC_COMPONENTS = [
   AutoinquirerFormComponent,
   AutoinquirerBreadcrumbComponent,
+  AutoinquirerAuthComponent,
+  ForgotPasswordDialog,
   //AutoinquirerConfirmComponent,
   //AutoinquirerCheckboxComponent,
   //AutoinquirerSelectComponent,
   //AutoinquirerTextareaComponent
 ];
 
-export const ComponentTypes = {
+export const ComponentTypes: { [key: string]: ComponentType<PromptComponent>} = {
   'form': AutoinquirerFormComponent,
   'breadcrumb': AutoinquirerBreadcrumbComponent,
+  'auth': AutoinquirerAuthComponent,
   //'textarea': AutoinquirerTextareaComponent,
   //'confirm': AutoinquirerConfirmComponent,
   //'checkbox': AutoinquirerCheckboxComponent,
@@ -45,7 +52,8 @@ export class DynamicComponent implements OnInit {
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private authService: AuthenticationService) { }
 
 
   ngOnInit() {
@@ -55,13 +63,13 @@ export class DynamicComponent implements OnInit {
   }
 
   setupComponent(data: IServerResponse) {
-    if (data) {
-      const componentType = ComponentTypes[data.type];
+    if (data && ComponentTypes[data.type]) {
+      const componentType: ComponentType<PromptComponent> = ComponentTypes[data.type];
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
       const viewContainerRef = this.promptHost.viewContainerRef;
       viewContainerRef.clear();
       const componentRef = viewContainerRef.createComponent(componentFactory);
-      (<PromptComponent>componentRef.instance).prompt = data;  
+      componentRef.instance.prompt = data;  
     }
   }
 

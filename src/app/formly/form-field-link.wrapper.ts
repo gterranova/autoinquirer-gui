@@ -2,10 +2,11 @@ import { Component, ViewChild, OnInit, OnDestroy, Renderer2, AfterViewInit, Afte
 import { FieldWrapper, ɵdefineHiddenProp as defineHiddenProp, FormlyFieldConfig, FormlyConfig } from '@ngx-formly/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { Subject, from } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { FieldType } from '@ngx-formly/material';
 import { Router } from '@angular/router';
+import { isObservable } from "rxjs";
 
 interface MatFormlyFieldConfig extends FormlyFieldConfig {
   _matprefix: TemplateRef<any>;
@@ -122,10 +123,18 @@ export class FormlyWrapperFormFieldLink extends FieldWrapper<MatFormlyFieldConfi
     this.stateChanges.next();
   }
 
-  goToPage(value: string) {
-    const selectedOption = (<any[]>this.to.options).find( o => o.value == value );
-    if (selectedOption && selectedOption.path) {
-      this.router.navigate(['/', ...selectedOption.path.split('/')]);
+  async goToPage(value: string) {
+    if (this.to?.options) {
+      const options = !isObservable(this.to.options) ? from(this.to.options) : this.to.options;
+      options.subscribe( (opts: any) => {
+        if (opts) {
+          opts = !Array.isArray(opts) ? [opts] : opts;
+          const selectedOption = opts.find( (o: any) => o.value == value );
+          if (selectedOption && selectedOption.path) {
+            this.router.navigate(['/', ...selectedOption.path.split('/')]);
+          }  
+        }
+      })  
     }
   }  
 

@@ -19,6 +19,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -38,6 +40,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatProgressBarModule,
     MatGridListModule,
     MatToolbarModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -55,6 +58,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatProgressBarModule,
     MatGridListModule,
     MatToolbarModule,    
+    MatDialogModule, 
   ],
   providers: [
     // The locale would typically be provided on the root module of your application. We do it at

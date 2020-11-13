@@ -10,56 +10,61 @@ import { ObjectTypeComponent } from './object.type';
 import { MultiSchemaTypeComponent } from './multischema.type';
 import { LinkTypeComponent } from './link.type';
 import { MaterialModule } from '../material/material.module';
-import { AppRoutingModule } from '../app-routing.module';
 import { FormlyWrapperFormFieldLink } from './form-field-link.wrapper';
 import { AccordionWrapperComponent } from './accordion.wrapper';
 import { MarkdownTypeComponent } from './markdown.type';
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { FilesystemWrapperComponent } from './filesystem.wrapper';
+import { NgxMaskModule } from 'ngx-mask';
+import { FormlyFieldMaskedInput } from './masked-input.type';
 
-export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
-  return `should NOT have fewer than ${field.templateOptions.minItems} items`;
+export function minItemsValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should NOT have fewer than ${field.templateOptions?.minItems} items`;
 }
 
-export function maxItemsValidationMessage(err, field: FormlyFieldConfig) {
-  return `should NOT have more than ${field.templateOptions.maxItems} items`;
+export function maxItemsValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should NOT have more than ${field.templateOptions?.maxItems} items`;
 }
 
-export function minlengthValidationMessage(err, field: FormlyFieldConfig) {
-  return `should NOT be shorter than ${field.templateOptions.minLength} characters`;
+export function minlengthValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should NOT be shorter than ${field.templateOptions?.minLength} characters`;
 }
 
-export function maxlengthValidationMessage(err, field: FormlyFieldConfig) {
-  return `should NOT be longer than ${field.templateOptions.maxLength} characters`;
+export function maxlengthValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should NOT be longer than ${field.templateOptions?.maxLength} characters`;
 }
 
-export function minValidationMessage(err, field: FormlyFieldConfig) {
-  return `should be >= ${field.templateOptions.min}`;
+export function minValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should be >= ${field.templateOptions?.min}`;
 }
 
-export function maxValidationMessage(err, field: FormlyFieldConfig) {
-  return `should be <= ${field.templateOptions.max}`;
+export function maxValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should be <= ${field.templateOptions?.max}`;
 }
 
-export function multipleOfValidationMessage(err, field: FormlyFieldConfig) {
-  return `should be multiple of ${field.templateOptions.step}`;
+export function multipleOfValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should be multiple of ${field.templateOptions?.step}`;
 }
 
-export function exclusiveMinimumValidationMessage(err, field: FormlyFieldConfig) {
-  return `should be > ${field.templateOptions.step}`;
+export function exclusiveMinimumValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should be > ${field.templateOptions?.step}`;
 }
 
-export function exclusiveMaximumValidationMessage(err, field: FormlyFieldConfig) {
-  return `should be < ${field.templateOptions.step}`;
+export function exclusiveMaximumValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should be < ${field.templateOptions?.step}`;
 }
 
-export function constValidationMessage(err, field: FormlyFieldConfig) {
-  return `should be equal to constant "${field.templateOptions.const}"`;
+export function constValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `should be equal to constant "${field.templateOptions?.const}"`;
 }
 
-export function serverValidationMessage(err) {
+export function patternValidationMessage(err: any, field: FormlyFieldConfig) {
+  return `"${err.actualValue}" does not match with required pattern "${err.requiredPattern}"`;
+}
+
+export function serverValidationMessage(err: any) {
   return err;
 }
 
@@ -74,12 +79,13 @@ export function serverValidationMessage(err) {
     AccordionWrapperComponent,
     MarkdownTypeComponent,
     FilesystemWrapperComponent,
+    FormlyFieldMaskedInput
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
-    AppRoutingModule,
     FormlyModule.forRoot({
         validationMessages: [
           { name: 'required', message: 'This field is required' },
@@ -96,6 +102,7 @@ export function serverValidationMessage(err) {
           { name: 'uniqueItems', message: 'should NOT have duplicate items' },
           { name: 'const', message: constValidationMessage },
           { name: 'server-error', message: serverValidationMessage },
+          { name: 'pattern', message: patternValidationMessage },
         ],
         types: [
           { name: 'string', extends: 'input' },
@@ -124,7 +131,8 @@ export function serverValidationMessage(err) {
           { name: 'object', component: ObjectTypeComponent, wrappers: ['accordion'] },
           { name: 'multischema', component: MultiSchemaTypeComponent },
           { name: 'link', component: LinkTypeComponent },
-          { name: 'markdown', component: MarkdownTypeComponent }
+          { name: 'markdown', component: MarkdownTypeComponent },
+          { name: 'masked-input', component: FormlyFieldMaskedInput, wrappers: ['form-field'] },
         ],
         wrappers: [
           { name: 'form-field-link', component: FormlyWrapperFormFieldLink },
@@ -133,6 +141,7 @@ export function serverValidationMessage(err) {
         ],
       }),
       FormlyMaterialModule,
+      NgxMaskModule.forRoot(),
       FormlyMatDatepickerModule,
       MarkdownModule.forChild(),
       LMarkdownEditorModule
