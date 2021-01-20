@@ -3,13 +3,52 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "autoinquirer-gui": {
-      "root": "",
-      "sourceRoot": "src",
+    "@autoinquirer/formly": {
+      "projectType": "library",
+      "root": "projects/autoinquirer/formly",
+      "sourceRoot": "projects/autoinquirer/formly/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/autoinquirer/formly/tsconfig.lib.json",
+            "project": "projects/autoinquirer/formly/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/autoinquirer/formly/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/autoinquirer/formly/src/test.ts",
+            "tsConfig": "projects/autoinquirer/formly/tsconfig.spec.json",
+            "karmaConfig": "projects/autoinquirer/formly/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/autoinquirer/formly/tsconfig.lib.json",
+              "projects/autoinquirer/formly/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "demo": {
       "projectType": "application",
-      "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
           "style": "scss",
           "skipTests": true
         },
@@ -22,6 +61,9 @@
         "@schematics/angular:guard": {
           "skipTests": true
         },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
         "@schematics/angular:module": {
           "skipTests": true
         },
@@ -32,19 +74,22 @@
           "skipTests": true
         }
       },
+      "root": "demo",
+      "sourceRoot": "demo/src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "outputPath": "dist/demo",
+            "index": "demo/src/index.html",
+            "main": "demo/src/main.ts",
+            "polyfills": "demo/src/polyfills.ts",
+            "tsConfig": "demo/tsconfig.app.json",
             "aot": true,
-            "outputPath": "../autoinquirer-server/dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
+              "demo/src/favicon.ico",
+              "demo/src/assets",
               {
                 "glob": "**/*",
                 "input": "node_modules/ace-builds/src-min",
@@ -52,34 +97,28 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/prismjs/themes/prism-okaidia.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css"              
+              "node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css",
+              "demo/src/styles.scss"
             ],
             "scripts": [
               "node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",
-              "node_modules/marked/lib/marked.js",
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-markdown.min.js"
-            ],
-            "es5BrowserSupport": true
+              "node_modules/ngx-markdown-editor/assets/marked.min.js"
+            ]
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "demo/src/environments/environment.ts",
+                  "with": "demo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -91,7 +130,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -100,111 +140,94 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "autoinquirer-gui:build"
+            "browserTarget": "demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "autoinquirer-gui:build:production"
+              "browserTarget": "demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "autoinquirer-gui:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "browserTarget": "demo:build"
           }
         }
       }
     },
-    "autoinquirer-gui-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "autoinquirer-gui:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "autoinquirer-gui:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "@ngx-juda/auth": {
-      "root": "lib/auth",
-      "sourceRoot": "lib/auth",
+    "@autoinquirer/markdown": {
       "projectType": "library",
+      "root": "projects/autoinquirer/markdown",
+      "sourceRoot": "projects/autoinquirer/markdown/src",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "lib/auth/tsconfig.lib.json",
-            "project": "lib/auth/ng-package.json"
+            "tsConfig": "projects/autoinquirer/markdown/tsconfig.lib.json",
+            "project": "projects/autoinquirer/markdown/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "lib/auth/ng-package.prod.json"
+              "tsConfig": "projects/autoinquirer/markdown/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/auth/src/test.ts",
-            "tsConfig": "lib/auth/tsconfig.spec.json",
-            "karmaConfig": "lib/auth/karma.conf.js"
+            "main": "projects/autoinquirer/markdown/src/test.ts",
+            "tsConfig": "projects/autoinquirer/markdown/tsconfig.spec.json",
+            "karmaConfig": "projects/autoinquirer/markdown/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/auth/tsconfig.lib.json",
-              "lib/auth/tsconfig.spec.json"
+              "projects/autoinquirer/markdown/tsconfig.lib.json",
+              "projects/autoinquirer/markdown/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@autoinquirer/auth": {
+      "projectType": "library",
+      "root": "projects/autoinquirer/auth",
+      "sourceRoot": "projects/autoinquirer/auth/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/autoinquirer/auth/tsconfig.lib.json",
+            "project": "projects/autoinquirer/auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/autoinquirer/auth/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/autoinquirer/auth/src/test.ts",
+            "tsConfig": "projects/autoinquirer/auth/tsconfig.spec.json",
+            "karmaConfig": "projects/autoinquirer/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/autoinquirer/auth/tsconfig.lib.json",
+              "projects/autoinquirer/auth/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -213,6 +236,6 @@
         }
       }
     }
- },
-  "defaultProject": "autoinquirer-gui"
+  },
+  "defaultProject": "@autoinquirer/formly"
 }

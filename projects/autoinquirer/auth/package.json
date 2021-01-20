@@ -1,0 +1,31 @@
+{
+  "name": "@autoinquirer/auth",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/animations": "~11.0.0",
+    "@angular/cdk": "^11.0.0",
+    "@angular/common": "~11.0.0",
+    "@angular/compiler": "~11.0.0",
+    "@angular/core": "~11.0.0",
+    "@angular/forms": "~11.0.0",
+    "@angular/http": "^7.2.16",
+    "@angular/material": "^11.0.0",
+    "@angular/material-moment-adapter": "^11.0.0",
+    "@angular/platform-browser": "~11.0.0",
+    "@angular/platform-browser-dynamic": "~11.0.0",
+    "@angular/router": "~11.0.0",
+    "@auth0/angular-jwt": "^5.0.1",
+    "@ngx-formly/core": "^5.10.6",
+    "@ngx-formly/material": "^5.10.6",
+    "@ngx-formly/schematics": "^5.10.6",
+    "core-js": "^2.5.4",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "ngx-mask": "^11.0.0",
+    "rxjs": "~6.6.3",
+    "zone.js": "~0.10.3"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

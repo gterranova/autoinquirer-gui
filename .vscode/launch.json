@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"configurations": [
+		{
+            "type": "node",
+            "request": "launch",
+            "name": "Debug GUI",
+            "restart": true,
+            "runtimeExecutable": "npm",
+            "args": [
+                "run",
+                "start:watch"
+            ],
+            "autoAttachChildProcesses": true,
+            "port": 5858,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}",
+            "timeout": 30000,
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
+	]
+}

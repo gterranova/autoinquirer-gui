@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -20,13 +19,25 @@
       "dom"
     ],
     "paths": {
-      "@ngx-juda/*": [
-        "dist/@ngx-juda/*"
+      "@autoinquirer/formly": [
+        "dist/@autoinquirer/formly/autoinquirer-formly",
+        "dist/@autoinquirer/formly"
+      ],
+      "@autoinquirer/markdown": [
+        "dist/@autoinquirer/markdown/autoinquirer-markdown",
+        "dist/@autoinquirer/markdown"
+      ],
+      "ngx-markdown-editor": [
+        "node_modules/ngx-markdown-editor/dist",
+        "node_modules/ngx-markdown-editor"
+      ],
+      "@autoinquirer/auth": [
+        "dist/@autoinquirer/auth/autoinquirer-auth",
+        "dist/@autoinquirer/auth"
       ]
     }
   },
-  "exclude": [
-    "dist/**/*",
-    "node_modules/**/*"
-  ]
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false
+  }
 }

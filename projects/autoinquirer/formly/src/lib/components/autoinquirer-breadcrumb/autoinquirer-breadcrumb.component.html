@@ -1,0 +1,14 @@
+<div style="display: flex; flex-direction: row;">
+<div style="flex: 1 0 min-content;">
+    <button mat-button (click)="select()"><mat-icon>home</mat-icon></button>
+    <ng-container *ngFor="let i of prompt.pathParts">
+        <mat-icon>keyboard_arrow_right</mat-icon> <button mat-button (click)="select(i.value)">{{ i.label }}</button>
+    </ng-container>
+</div>
+<div style="flex: 0 0 max-content">
+    <button mat-button [disabled]="!prompt.first" (click)="select(prompt.first)"><mat-icon>first_page</mat-icon></button>
+    <button mat-button [disabled]="!prompt.prev" (click)="select(prompt.prev)"><mat-icon>chevron_left</mat-icon></button>
+    <button mat-button [disabled]="!prompt.next" (click)="select(prompt.next)"><mat-icon>chevron_right</mat-icon></button>
+    <button mat-button [disabled]="!prompt.last" (click)="select(prompt.last)"><mat-icon>last_page</mat-icon></button>
+</div>
+</div>
