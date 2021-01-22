@@ -19,6 +19,7 @@ import { FormlyWrapperFormFieldLink } from './wrappers/form-field-link.wrapper';
 import { CardWrapperComponent } from './wrappers/card.wrapper';
 import { AccordionWrapperComponent } from './wrappers/accordion.wrapper';
 import { FilesystemWrapperComponent } from './wrappers/filesystem.wrapper';
+import { GroupsWrapperComponent } from './wrappers/groups.wrapper';
 import { NgxMaskModule } from 'ngx-mask';
 import { FormlyFieldMaskedInput } from './types/masked-input.type';
 
@@ -34,6 +35,7 @@ import { FormlyFieldMaskedInput } from './types/masked-input.type';
     CardWrapperComponent,
     AccordionWrapperComponent,
     FilesystemWrapperComponent,
+    GroupsWrapperComponent,
     FormlyFieldMaskedInput,
   ],
   imports: [

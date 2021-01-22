@@ -12,6 +12,7 @@ import { CardWrapperComponent } from './wrappers/card.wrapper';
 import { AccordionWrapperComponent } from './wrappers/accordion.wrapper';
 import { FilesystemWrapperComponent } from './wrappers/filesystem.wrapper';
 import { FormlyFieldMaskedInput } from './types/masked-input.type';
+import { GroupsWrapperComponent } from './wrappers/groups.wrapper';
 //import { MarkdownTypeComponent } from '../markdown/markdown.type';
 
 export function minItemsValidationMessage(err: any, field: FormlyFieldConfig) {
@@ -160,7 +161,8 @@ export const formlyConfig : ConfigOption = {
       { name: 'form-field-link', component: FormlyWrapperFormFieldLink },
       { name: 'accordion', component: AccordionWrapperComponent },
       { name: 'card', component: CardWrapperComponent},
-      { name: 'filesystem', component: FilesystemWrapperComponent }
+      { name: 'filesystem', component: FilesystemWrapperComponent },
+      { name: 'groups', component: GroupsWrapperComponent },
     ],
 };
 
