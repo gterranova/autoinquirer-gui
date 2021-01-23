@@ -36,7 +36,14 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
                 startWith(depField.value),
                 map(depFieldId => selectOptionsData.filter(o => o[`${groupField}Id`] === depFieldId)),
                 tap((options) => {
-                  _.includes(options.map(o => o.value), field.formControl?.value) || field.formControl?.setValue(null)
+                  const optionValues = options.map(o => o.value);
+                  if (field.templateOptions.multiple) {
+                    const currentValue: string[] = field.formControl?.value || [];
+                    field.formControl?.setValue(currentValue.filter( v => _.includes(optionValues, v)));
+                  } else if (!_.includes(optionValues, field.formControl?.value)) {
+                    form.markAsDirty();
+                    field.formControl?.setValue("");
+                  }
                 })
               );
             }
