@@ -55,7 +55,7 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
   }
 
   update() {
-    return this.promptService.request(Action.GET, this.to.path, { sanitize: 1 }).pipe( map((formData: IServerResponse) => {
+    return this.promptService.request(Action.GET, this.to.path, { do: 'formly' }).pipe( map((formData: IServerResponse) => {
       this.to.label = formData.schema.title;
       this.dataSource.next(formData.model);
       this.displayedColumns = (formData.schema.readOnly)? ['name'] : ['name', 'actions'];

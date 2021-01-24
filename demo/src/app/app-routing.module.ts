@@ -10,8 +10,9 @@ export class PathResolveService implements Resolve<any> {
   constructor(private formlyService: FormlyService, private authService: AuthenticationService) {}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const path = state.url.slice(1);
-    return await this.formlyService.request('get', path, { render: 1 }).toPromise();
+    const path = state.url.slice(1).split('?')[0];
+    const params = route.queryParamMap.has('do')? route.queryParams: { do: 'layout' }; 
+    return await this.formlyService.request('get', path, params).toPromise();
   }
 }
 
