@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { DynamicContainer, DynamicComponent, PromptHostDirective, DYNAMIC_COMPONENTS } from './components';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AutoinquirerCoreModule } from '@autoinquirer/core';
+import { SharedModule } from '@autoinquirer/shared';
 import { AutoinquirerFormlyModule } from '@autoinquirer/formly';
 import { AuthModule } from '@autoinquirer/auth';
 import { MarkdownModule } from '@autoinquirer/markdown';
@@ -48,6 +50,8 @@ export function markedOptionsFactory(): MarkedOptions {
     HttpClientModule,
     //SocketIoModule.forRoot(config),
     BrowserAnimationsModule,
+    SharedModule.forRoot(),
+    AutoinquirerCoreModule.forRoot(),
     AutoinquirerFormlyModule.forRoot(),
     AuthModule.forRoot(),
     MarkdownModule.forRoot({

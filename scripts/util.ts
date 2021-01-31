@@ -1,7 +1,8 @@
 import { execSync, ExecSyncOptions } from 'child_process';
 
 export const PACKAGES = [
-  //'core',
+  'shared',
+  'core',
   //'schematics',
 
   // UI

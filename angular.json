@@ -235,7 +235,87 @@
           }
         }
       }
+    },
+    "@autoinquirer/core": {
+      "projectType": "library",
+      "root": "projects/autoinquirer/core",
+      "sourceRoot": "projects/autoinquirer/core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/autoinquirer/core/tsconfig.lib.json",
+            "project": "projects/autoinquirer/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/autoinquirer/core/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/autoinquirer/core/src/test.ts",
+            "tsConfig": "projects/autoinquirer/core/tsconfig.spec.json",
+            "karmaConfig": "projects/autoinquirer/core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/autoinquirer/core/tsconfig.lib.json",
+              "projects/autoinquirer/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@autoinquirer/shared": {
+      "projectType": "library",
+      "root": "projects/autoinquirer/shared",
+      "sourceRoot": "projects/autoinquirer/shared/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/autoinquirer/shared/tsconfig.lib.json",
+            "project": "projects/autoinquirer/shared/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/autoinquirer/shared/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/autoinquirer/shared/src/test.ts",
+            "tsConfig": "projects/autoinquirer/shared/tsconfig.spec.json",
+            "karmaConfig": "projects/autoinquirer/shared/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/autoinquirer/shared/tsconfig.lib.json",
+              "projects/autoinquirer/shared/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "@autoinquirer/formly"
+  "defaultProject": "@autoinquirer/core"
 }

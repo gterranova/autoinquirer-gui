@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { IServerResponse, FormlyService } from '@autoinquirer/formly';
+import { IServerResponse, FormlyService } from '@autoinquirer/shared';
 
 @Component({
   selector: 'app-root',

@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyModule } from '@ngx-formly/core';
 import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/formly';
-import { AutoinquirerFormlyModule, FormlyService, DynamicComponentConfigOption } from '@autoinquirer/formly';
+import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/shared';
+import { FormlyService, DynamicComponentConfigOption } from '@autoinquirer/shared';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,7 +44,7 @@ export function jwtOptionsFactory(tokenService: TokenService) {
   };
 }
 
-export function defaultDynamicComponentConfig(config?: DynamicComponentConfig): DynamicComponentConfigOption {
+export function defaultDynamicComponentConfig(): DynamicComponentConfigOption {
   return {
     types: [
       { name: 'auth-login', component: AutoinquirerAuthLoginComponent },
@@ -75,7 +75,6 @@ const DYNAMIC_COMPONENTS = [
     HttpClientModule,
     BrowserAnimationsModule,
     FormlyModule,
-    AutoinquirerFormlyModule,
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,

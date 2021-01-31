@@ -4,6 +4,7 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
+      "@autoinquirer/shared": "@autoinquirer/shared",
       "lodash": "lodash",
       "@ngx-formly/core/json-schema": "@ngx-formly/core/json-schema",
       "@ngx-formly/core": "@ngx-formly/core",

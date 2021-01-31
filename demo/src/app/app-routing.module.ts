@@ -1,6 +1,7 @@
 import { NgModule, Injectable } from '@angular/core';
 import { Routes, RouterModule, Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { DynamicContainer, FormlyService } from '@autoinquirer/formly';
+import { FormlyService } from '@autoinquirer/shared';
+import { DynamicContainer } from '@autoinquirer/core';
 import { AuthenticationService } from '@autoinquirer/auth';
 
 @Injectable({

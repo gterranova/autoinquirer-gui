@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
 
 import { TokenService } from './token.service';
-import { FormlyService } from '@autoinquirer/formly';
+import { FormlyService } from '@autoinquirer/shared';
 import { User, LocalData, NewUser, UserActivation } from '../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';

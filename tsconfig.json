@@ -19,6 +19,10 @@
       "dom"
     ],
     "paths": {
+      "@autoinquirer/core": [
+        "dist/@autoinquirer/core/autoinquirer-core",
+        "dist/@autoinquirer/core"
+      ],
       "@autoinquirer/formly": [
         "dist/@autoinquirer/formly/autoinquirer-formly",
         "dist/@autoinquirer/formly"
@@ -34,6 +38,10 @@
       "@autoinquirer/auth": [
         "dist/@autoinquirer/auth/autoinquirer-auth",
         "dist/@autoinquirer/auth"
+      ],
+      "@autoinquirer/shared": [
+        "dist/@autoinquirer/shared/autoinquirer-shared",
+        "dist/@autoinquirer/shared"
       ]
     }
   },

@@ -1,82 +1,108 @@
-import { NgModule, ModuleWithProviders, Optional } from '@angular/core';
+import { Inject, ModuleWithProviders, NgModule, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 
-import { FormlyJsonModule } from './formly/formly-json.module';
-import { DynamicContainer, DynamicComponent, PromptHostDirective, DynamicLayoutComponent } from './components';
-import { FormlyService, DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from './services';
-import { DynamicComponentConfigOption } from './autoinquirer-formly.models';
+import { formlyConfig } from './formly.config';
 
-import { AutoinquirerFormComponent } from './components/autoinquirer-form/autoinquirer-form.component';
-import { AutoinquirerBreadcrumbComponent } from './components/autoinquirer-breadcrumb/autoinquirer-breadcrumb.component';
-import { Inject } from '@angular/core';
-import { DynamicEmptyComponent, DynamicRedirectComponent } from './components/dynamic.component';
+import { MaterialModule } from './material.module';
 
+import { NullTypeComponent } from './types/null.type';
+import { ArrayTypeComponent } from './types/array.type';
+import { ObjectTypeComponent } from './types/object.type';
+import { MultiSchemaTypeComponent } from './types/multischema.type';
+import { LinkTypeComponent } from './types/link.type';
+import { ButtonTypeComponent } from './types/button.type';
+import { FormlyWrapperFormFieldLink } from './wrappers/form-field-link.wrapper';
+import { CardWrapperComponent } from './wrappers/card.wrapper';
+import { AccordionWrapperComponent } from './wrappers/accordion.wrapper';
+import { FilesystemWrapperComponent } from './wrappers/filesystem.wrapper';
+import { GroupsWrapperComponent } from './wrappers/groups.wrapper';
+import { NgxMaskModule } from 'ngx-mask';
+import { FormlyFieldMaskedInput } from './types/masked-input.type';
+import { DragAndDropAreaDirective } from './directives/drag-and-drop-area.directive';
+import { ArrayPushDirective } from './directives/array-push.directive';
+import { ArrayDeleteDirective } from './directives/array-item-delete.directive'
 
-export function defaultDynamicComponentConfig(config: DynamicComponentConfig): DynamicComponentConfigOption {
+import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/shared';
+import { DynamicComponentConfigOption, SharedModule } from '@autoinquirer/shared';
+
+import { AutoinquirerFormComponent } from './components/autoinquirer-form.component';
+
+export function defaultDynamicComponentConfig(): DynamicComponentConfigOption {
   return {
     types: [
-      { name: 'layout', component: DynamicLayoutComponent },
       { name: 'form', component: AutoinquirerFormComponent },
-      { name: 'breadcrumb', component: AutoinquirerBreadcrumbComponent },
-      { name: 'redirect', component: DynamicRedirectComponent },      
     ]
   };
 }
 
 const DYNAMIC_COMPONENTS = [
   AutoinquirerFormComponent,
-  AutoinquirerBreadcrumbComponent,
-  DynamicLayoutComponent,
-  DynamicEmptyComponent,
-  DynamicRedirectComponent,
 ];
 
 @NgModule({
   declarations: [
-    DynamicContainer,
-    DynamicComponent,
-    PromptHostDirective,
-    ...DYNAMIC_COMPONENTS,    
+    ArrayTypeComponent,
+    ObjectTypeComponent,
+    MultiSchemaTypeComponent,
+    NullTypeComponent,
+    LinkTypeComponent,
+    ButtonTypeComponent,
+    FormlyWrapperFormFieldLink,
+    CardWrapperComponent,
+    AccordionWrapperComponent,
+    FilesystemWrapperComponent,
+    GroupsWrapperComponent,
+    FormlyFieldMaskedInput,
+    DragAndDropAreaDirective,
+    ArrayPushDirective,
+    ArrayDeleteDirective,
+    ...DYNAMIC_COMPONENTS,
   ],
   imports: [
-    CommonModule, 
-    BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormlyJsonModule,
+    MaterialModule,
+    FormlyModule.forRoot(formlyConfig),
+    FormlyMaterialModule,
+    NgxMaskModule.forRoot(),
+    FormlyMatDatepickerModule,
+    SharedModule,
   ],
   entryComponents: [
-    ...DYNAMIC_COMPONENTS
+    ...DYNAMIC_COMPONENTS,
   ],
   exports: [
+    FormlyModule,
+    FormlyMaterialModule,
+    FormlyMatDatepickerModule,
+    MaterialModule,
+    ...DYNAMIC_COMPONENTS,
   ]
 })
 export class AutoinquirerFormlyModule { 
+  
   static forRoot(config: DynamicComponentConfigOption = {}): ModuleWithProviders<AutoinquirerFormlyModule> {
     return {
       ngModule: AutoinquirerFormlyModule,
       providers: [
-        FormlyService,
-        [
-          { provide: DYNAMIC_COMPONENT_CONFIG, multi: true, useFactory: defaultDynamicComponentConfig, deps: [DynamicComponentConfig] },
-          { provide: DYNAMIC_COMPONENT_CONFIG, useValue: config, multi: true },          
-        ],
+        { provide: DYNAMIC_COMPONENT_CONFIG, multi: true, useFactory: defaultDynamicComponentConfig, deps: [DynamicComponentConfig] },
+        { provide: DYNAMIC_COMPONENT_CONFIG, useValue: config, multi: true },
       ]
     };
   }
 
-  constructor(configService: DynamicComponentConfig, @Optional() @Inject(DYNAMIC_COMPONENT_CONFIG) configs: DynamicComponentConfigOption[] = []) {
+  constructor(@Inject(DynamicComponentConfig) configService: DynamicComponentConfig, @Optional() @Inject(DYNAMIC_COMPONENT_CONFIG) configs: DynamicComponentConfigOption[] = []) {
     if (!configs) {
+      configService.addConfig(defaultDynamicComponentConfig());
       return;
     }
 
     configs.forEach((config) => configService.addConfig(config));
-  }  
+  }
+
 }

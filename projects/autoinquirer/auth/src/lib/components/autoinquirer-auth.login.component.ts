@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PromptComponent, IServerResponse, PromptCallbackType } from '@autoinquirer/formly';
+import { PromptComponent, IServerResponse, PromptCallbackType } from '@autoinquirer/shared';
 import { AuthService } from '../services/auth.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
