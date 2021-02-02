@@ -17,8 +17,8 @@ interface IArrayItem {
     <table style="width: 100%; margin: 0 -24px" mat-table [dataSource]="dataSource">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> {{ to.label }} </th>
-        <td mat-cell *matCellDef="let element" (click)="select(element)" style="cursor: pointer; width: 100%"> {{element.name}} </td>
+        <th mat-header-cell *matHeaderCellDef> {{ to.label | safe:'html' }} </th>
+        <td mat-cell *matCellDef="let element" (click)="select(element)" style="cursor: pointer; width: 100%"> {{element.name | safe:'html'}} </td>
       </ng-container>
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> actions </th>

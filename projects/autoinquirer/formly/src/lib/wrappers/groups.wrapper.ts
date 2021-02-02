@@ -10,7 +10,7 @@ template: `
 <mat-expansion-panel [expanded]="to.expanded" [disabled]="to.disabled">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <b>{{ group }}</b>
+      <b>{{ group | safe:'html' }}</b>
     </mat-panel-title> 
   </mat-expansion-panel-header>
   <formly-field [field]="getField(group)"></formly-field>

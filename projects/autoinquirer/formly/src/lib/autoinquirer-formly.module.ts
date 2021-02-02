@@ -24,7 +24,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { FormlyFieldMaskedInput } from './types/masked-input.type';
 import { DragAndDropAreaDirective } from './directives/drag-and-drop-area.directive';
 import { ArrayPushDirective } from './directives/array-push.directive';
-import { ArrayDeleteDirective } from './directives/array-item-delete.directive'
+import { ArrayDeleteDirective } from './directives/array-item-delete.directive';
+import { FieldActionDirective } from './directives/field-action.directive';
+import { SafePipe } from './safe.pipe';
 
 import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/shared';
 import { DynamicComponentConfigOption, SharedModule } from '@autoinquirer/shared';
@@ -45,6 +47,7 @@ const DYNAMIC_COMPONENTS = [
 
 @NgModule({
   declarations: [
+    SafePipe,
     ArrayTypeComponent,
     ObjectTypeComponent,
     MultiSchemaTypeComponent,
@@ -60,6 +63,7 @@ const DYNAMIC_COMPONENTS = [
     DragAndDropAreaDirective,
     ArrayPushDirective,
     ArrayDeleteDirective,
+    FieldActionDirective,
     ...DYNAMIC_COMPONENTS,
   ],
   imports: [

@@ -1,5 +1,5 @@
 import { Directive, Inject, Input, HostListener, Output, EventEmitter } from '@angular/core';
-import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Action, IServerResponse, FormlyService } from '@autoinquirer/shared';
 import { map } from 'rxjs/operators';
 

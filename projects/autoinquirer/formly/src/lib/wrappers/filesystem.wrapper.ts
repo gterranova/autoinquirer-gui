@@ -18,11 +18,11 @@ template: `
 <mat-expansion-panel [expanded]="to.expanded" [disabled]="to.disabled">
   <mat-expansion-panel-header>
     <mat-panel-title style="align-items: center">
-      <b>{{ to.label }}</b>
+      <b>{{ to.label | safe:'html' }}</b>
     </mat-panel-title> 
     <mat-panel-description>
       <div style="display:flex; width: 100%">
-        <span class="spacer">{{ to.description }}&nbsp;</span>
+        <span class="spacer">{{ to.description | safe:'html' }}&nbsp;</span>
         <ng-container *ngTemplateOutlet="fileButtons"></ng-container>
       </div>
     </mat-panel-description>

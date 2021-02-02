@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
         <ng-container #fieldComponent></ng-container>
       </div>
       <div style="align-self: center;">
+        <ng-container *ngFor="let action of to.actions">
+          <a mat-button (click)="doAction(action)"><mat-icon>flash_on</mat-icon></a>
+        </ng-container>
         <a *ngIf="resource" mat-button (click)="goToResource()"><mat-icon>open_in_new</mat-icon></a>
         <a *ngIf="path" mat-button (click)="goToPath()"><mat-icon>link</mat-icon></a>
       </div>
@@ -29,6 +32,10 @@ export class FormlyWrapperFormFieldLink extends FieldWrapper {
 
   goToResource() {
     window.open(this.resource, '_blank');
+  }  
+
+  doAction(action: string) {
+    this.router.navigate(['/', ...this.path.split('/')], { queryParams: { do: action }});
   }  
 
   get value() { return this.formControl.value; }

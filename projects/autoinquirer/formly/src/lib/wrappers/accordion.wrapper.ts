@@ -6,9 +6,20 @@ import { FormlyService } from '@autoinquirer/shared';
 @Component({
 selector: 'formly-wrapper-accordion',
 template: `
-<ng-template #defaultButtons></ng-template>
+<ng-template #defaultButtons>
+  <ng-container *ngFor="let action of to.actions">
+    <span fieldAction [field]="field" [action]="action">
+      <button mat-button color="primary"><mat-icon>flash_on</mat-icon>&nbsp;{{action}}</button>
+    </span>
+  </ng-container>
+</ng-template>
 <ng-template #arrayButtons>
-    <span arrayPush [arrayField]="field"><button *ngIf="!to.readonly" mat-button color="primary"><mat-icon>add</mat-icon>Add new</button></span>
+  <ng-container *ngFor="let action of to.actions">
+    <span fieldAction [field]="field" [action]="action">
+      <button mat-button color="primary"><mat-icon>flash_on</mat-icon>&nbsp;{{action}}</button>
+    </span>
+  </ng-container>
+  <span arrayPush [arrayField]="field"><button *ngIf="!to.readonly" mat-button color="primary"><mat-icon>add</mat-icon>Add new</button></span>
 </ng-template>
 <!--ng-template #fileButtons>
   <input style="display:none" type="file"
@@ -20,11 +31,11 @@ template: `
 <mat-expansion-panel [expanded]="to.expanded" [disabled]="to.disabled">
   <mat-expansion-panel-header>
     <mat-panel-title style="align-items: center">
-      <b>{{ to.label }}</b>
+      <b>{{ to.label | safe:'html' }}</b>
     </mat-panel-title> 
     <mat-panel-description>
       <div style="display:flex; width: 100%">
-        <span style="flex-grow: 1">{{ to.description }}&nbsp;</span>
+        <span style="flex-grow: 1">{{ to.description | safe:'html' }}&nbsp;</span>
         <ng-container *ngTemplateOutlet="myButtons ? myButtons: defaultButtons"></ng-container>
       </div>
     </mat-panel-description>
