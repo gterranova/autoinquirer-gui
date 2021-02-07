@@ -1,6 +1,6 @@
 import { NgModule, Injectable } from '@angular/core';
 import { Routes, RouterModule, Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { FormlyService } from '@autoinquirer/shared';
+import { Action, FormlyService } from '@autoinquirer/shared';
 import { DynamicContainer } from '@autoinquirer/core';
 import { AuthenticationService } from '@autoinquirer/auth';
 
@@ -13,7 +13,7 @@ export class PathResolveService implements Resolve<any> {
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const path = state.url.slice(1).split('?')[0];
     const params = route.queryParamMap.has('do')? route.queryParams: { do: 'layout' }; 
-    return await this.formlyService.request('get', path, params).toPromise();
+    return await this.formlyService.request(Action.GET, path, params).toPromise();
   }
 }
 

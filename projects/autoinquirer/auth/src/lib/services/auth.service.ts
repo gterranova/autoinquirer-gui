@@ -7,6 +7,7 @@ import { FormlyService } from '@autoinquirer/shared';
 import { User, LocalData, NewUser, UserActivation } from '../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
+import { Action } from '@autoinquirer/shared';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class AuthService {
 
   login(user: User): Observable<boolean> {
     // add authorization header with jwt token
-    return this.formlyService.request('update', `${this.prefix}/login`, user).pipe(
+    return this.formlyService.request(Action.UPDATE, `${this.prefix}/login`, user).pipe(
       map((response: any) => {
         // login successful if there's a jwt token in the response
         const { uid, token } = response;
@@ -57,7 +58,7 @@ export class AuthService {
 
   register(user: NewUser): Observable<boolean> {
     // add authorization header with jwt token
-    return this.formlyService.request('update', `${this.prefix}/register`, user).pipe(
+    return this.formlyService.request(Action.UPDATE, `${this.prefix}/register`, user).pipe(
       map((response: any) => {
         // login successful if there's a jwt token in the response
         const { uid, token } = response;
@@ -81,12 +82,12 @@ export class AuthService {
 
   activate(user: UserActivation): Observable<any> {
     // add authorization header with jwt token
-    return this.formlyService.request('update', `${this.prefix}/activate`, user);
+    return this.formlyService.request(Action.UPDATE, `${this.prefix}/activate`, user);
   }
 
   refreshToken() {
     // add authorization header with jwt token
-    return this.formlyService.request('set', `${this.prefix}/renew`, {
+    return this.formlyService.request(Action.SET, `${this.prefix}/renew`, {
       token: this.tokenService.token
     }).subscribe((response: any) => {
       // login successful if there's a jwt token in the response
@@ -109,7 +110,7 @@ export class AuthService {
   }
 
   currentUser() {
-    return this.formlyService.request('get', `${this.prefix}/me`);
+    return this.formlyService.request(Action.GET, `${this.prefix}/me`);
   }
 
   private scheduleRenewal() {

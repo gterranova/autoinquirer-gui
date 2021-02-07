@@ -2,7 +2,8 @@ import { Injectable, Inject, PLATFORM_ID, Optional } from '@angular/core';
 //import { Socket } from 'ngx-socket-io';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Action, ActionHttpMethodMap } from './shared.models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,13 @@ import { NavigationExtras, Router } from '@angular/router';
 export class FormlyService {
   //currentPrompt = this.socket.fromEvent<Item>('prompt');
   private baseUrl = '';
-  private prefix = '/api/';
+  private apiEntryPoint = '/api/';
+  private rpcEntryPoint = '/api/json-rpc/';
+  private _rpcCallId: number;
+  private get rpcCallId(): any {
+    this._rpcCallId += 1;
+    return this._rpcCallId.toString();
+  }
 
   constructor(
     private http: HttpClient, 
@@ -35,12 +42,12 @@ export class FormlyService {
   }
 
   public request(
-    method: 'get' | 'push' | 'set' | 'update' | 'del' | 'upload',
+    method: Action,
     itemPath: string,
     ...args: any[]
   ) {
     let params, value;
-    if (method === 'get' || method === 'del' && args.length > 0) {
+    if (method === Action.GET || method === Action.DELETE && args.length > 0) {
       params = args.pop();
     } else if (args.length > 1) {
       params = args.pop();
@@ -49,50 +56,42 @@ export class FormlyService {
       value = args.shift();
     }
     const options = { headers: this.createRequestHeader(), params };
+    const requestUrl = `${this.baseUrl}${this.apiEntryPoint}${itemPath}`;
     switch (method) {
-      case 'get':
-        return this.http.get(
-          `${this.baseUrl}${this.prefix}${itemPath}`,
-          options
-        );
-      case 'push':
-        return this.http.post(
-          `${this.baseUrl}${this.prefix}${itemPath}`,
-          JSON.stringify(value),
-          options
-        );
-      case 'set':
-        return this.http.put(
-          `${this.baseUrl}${this.prefix}${itemPath}`,
-          JSON.stringify(value),
-          options
-        );
-      case 'update':
-        return this.http.patch(
-          `${this.baseUrl}${this.prefix}${itemPath}`,
-          JSON.stringify(value),
-          options
-        );
-      case 'del':
-        return this.http.delete(
-          `${this.baseUrl}${this.prefix}${itemPath}`,
-          options
-        );
-      case 'upload':
+      case Action.GET:
+      case Action.DELETE:
+          return this.http[ActionHttpMethodMap[method]](requestUrl, options);
+      case Action.PUSH:
+      case Action.SET:
+      case Action.UPDATE:
+          return this.http[ActionHttpMethodMap[method]](requestUrl, JSON.stringify(value), options);
+      case Action.UPLOAD:
         // create a http-post request and pass the form
         // tell it to report the upload progress
         const httpParams = new HttpParams({ fromObject: params });
         //console.log(httpParams);
-        const req = new HttpRequest(
-          'POST',
-          `${this.baseUrl}${this.prefix}${itemPath}`,
-          value,
-          { params: httpParams, reportProgress: true }
-        );        
+        const req = new HttpRequest(ActionHttpMethodMap[method], requestUrl, value, { params: httpParams, reportProgress: true });        
         return this.http.request(req);
         default:
     }
     throw new Error(`Unknown method ${method}`);
   }
 
+  public rpc(
+    method: string,
+    itemPath: string,
+    value: any,
+    params: any
+  ) {
+    return this.http.post(
+      `${this.baseUrl}${this.rpcEntryPoint}`,
+      JSON.stringify({
+        jsonrpc: "2.0",
+        method,
+        params: { path: itemPath, value},
+        id: this.rpcCallId
+      }),
+      { headers: this.createRequestHeader(), params }
+    );
+  }  
 }

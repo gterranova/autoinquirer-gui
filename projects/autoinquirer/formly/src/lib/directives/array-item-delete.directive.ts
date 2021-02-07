@@ -29,7 +29,7 @@ import { catchError, map } from 'rxjs/operators';
       const selection = this.model[this.idx];
       if (selection && !selection.disabled) {
         //console.log("delete", {selection, idx: this.idx })
-        this.promptService.request(Action.DEL, selection.path).pipe( catchError( () => of([]))).subscribe( () => {
+        this.promptService.request(Action.DELETE, selection.path).pipe( catchError( () => of([]))).subscribe( () => {
             //console.log({model: this.model });
             this.onDeleted?.emit(this.idx);
         });

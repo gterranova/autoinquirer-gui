@@ -5,15 +5,23 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Observable } from 'rxjs';
 
 export const enum Action {
-    BACK = 'back',
-    EXIT = 'exit',
     GET = 'get',
     PUSH = 'push',
     SET = 'set',
     UPDATE = 'update',
-    DEL = 'del'
+    DELETE = 'delete',
+    UPLOAD = 'upload',
 }
 
+export const ActionHttpMethodMap = {
+    [Action.GET]: 'get', 
+    [Action.PUSH]: 'post', 
+    [Action.SET]: 'put', 
+    [Action.UPDATE]: 'patch', 
+    [Action.DELETE]: 'delete', 
+    [Action.UPLOAD]: 'post', 
+};
+    
 export interface IServerResponse {
     type: string;
     path?: string;
@@ -40,7 +48,7 @@ export interface IProperty extends JSONSchema7 {
 
 type PromptRequestCallbackType = (
     action: 'request',
-    method: 'get' | 'push' | 'set' | 'update' | 'del',
+    method: Action,
     itemPath: string,
     ...args: any[]
 ) => Observable<any>;

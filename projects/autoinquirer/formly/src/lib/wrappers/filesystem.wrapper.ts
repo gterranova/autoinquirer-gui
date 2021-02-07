@@ -3,7 +3,7 @@ import { HttpEventType, HttpResponse, HttpUploadProgressEvent } from '@angular/c
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
 import { Subject } from 'rxjs';
-import { FormlyService } from '@autoinquirer/shared';
+import { Action, FormlyService } from '@autoinquirer/shared';
 
 @Component({
 selector: 'formly-wrapper-filesystem',
@@ -125,7 +125,7 @@ export class FilesystemWrapperComponent extends FieldWrapper {
         const fileToUpload = files.item(i);
         formData.append('file', fileToUpload, fileToUpload.name);
       }
-      return this.promptService.request('upload', this.to.path, formData, { /* do: 'formly' */ }).subscribe((event: HttpResponse<any>|HttpUploadProgressEvent) => {
+      return this.promptService.request(Action.UPLOAD, this.to.path, formData, { /* do: 'formly' */ }).subscribe((event: HttpResponse<any>|HttpUploadProgressEvent) => {
 
         if (event.type === HttpEventType.UploadProgress) {
           // calculate the progress percentage
