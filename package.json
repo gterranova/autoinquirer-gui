@@ -33,7 +33,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.20",
-    "marked": "^1.2.4",
+    "marked": "^2.0.0",
     "moment": "^2.29.1",
     "ngx-markdown-editor": "^3.2.4",
     "ngx-mask": "^11.0.0",
