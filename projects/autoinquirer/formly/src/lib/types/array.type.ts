@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 interface IArrayItem { 
-  name: string, 
+  label: string, 
   path: string,
   resourceUrl?: string,
   disabled?: boolean
@@ -15,10 +15,10 @@ interface IArrayItem {
   selector: 'formly-array-type',
   template: `
     <table style="width: 100%; margin: 0 -24px" mat-table [dataSource]="dataSource">
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
+      <!-- label Column -->
+      <ng-container matColumnDef="label">
         <th mat-header-cell *matHeaderCellDef> {{ to.label | safe:'html' }} </th>
-        <td mat-cell *matCellDef="let element" (click)="select(element)" style="cursor: pointer; width: 100%"> {{element.name | safe:'html'}} </td>
+        <td mat-cell *matCellDef="let element" (click)="select(element)" style="cursor: pointer; width: 100%"> {{element.label | safe:'html'}} </td>
       </ng-container>
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> actions </th>
@@ -41,7 +41,7 @@ interface IArrayItem {
   `
 })
 export class ArrayTypeComponent extends FieldArrayType implements OnInit {
-  displayedColumns = ['name', 'actions'];
+  displayedColumns = ['label', 'actions'];
   dataSource = new BehaviorSubject<IArrayItem[]>([]);
   topLevel: boolean;
 
@@ -50,7 +50,7 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
   }
   ngOnInit(): void {
     this.dataSource.next(this.model);
-    this.displayedColumns = (this.to.readonly)? ['name'] : ['name', 'actions'];
+    this.displayedColumns = (this.to.readonly)? ['label'] : ['label', 'actions'];
     this.topLevel = !this.field.parent?.parent;
     this.formControl.valueChanges.pipe( map( (model: IArrayItem[]) => Array.isArray(model)? model : Object.values(model)) )
       .subscribe( (model: IArrayItem[]) => {
@@ -68,7 +68,7 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
     return this.promptService.request(Action.GET, this.to.path, { do: 'formly' }).pipe( map((formData: IServerResponse) => {
       this.to.label = formData.schema.title;
       this.dataSource.next(formData.model);
-      this.displayedColumns = (formData.schema.readOnly)? ['name'] : ['name', 'actions'];
+      this.displayedColumns = (formData.schema.readOnly)? ['label'] : ['label', 'actions'];
       return formData.model;    
     }));
   }
