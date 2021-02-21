@@ -25,7 +25,7 @@ function absolute(testPath: string, absolutePath: string): string {
 @Component({
   selector: 'formly-link-type',
   template: `
-    <a mat-button *ngIf="field.key" (click)="select(field.key)">{{ content(field.key) | safe:'html' }}</a>
+    <a mat-button [disabled]="to.disabled" *ngIf="field.key" (click)="select(field.key)">{{ content(field.key) | safe:'html' }}</a>
   `,
   styles: [`a {
     text-decoration: none;

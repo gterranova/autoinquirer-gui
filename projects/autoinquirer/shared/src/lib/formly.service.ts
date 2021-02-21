@@ -13,7 +13,7 @@ export class FormlyService {
   private baseUrl = '';
   private apiEntryPoint = '/api/';
   private rpcEntryPoint = '/api/json-rpc/';
-  private _rpcCallId: number;
+  private _rpcCallId: number = 0;
   private get rpcCallId(): any {
     this._rpcCallId += 1;
     return this._rpcCallId.toString();
@@ -75,6 +75,10 @@ export class FormlyService {
         default:
     }
     throw new Error(`Unknown method ${method}`);
+  }
+
+  public paste(src, dest) {
+    return this.request(Action.SET, dest, { $ref: src });
   }
 
   public rpc(

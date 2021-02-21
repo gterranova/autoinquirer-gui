@@ -6,6 +6,9 @@
     </ng-container>
 </div>
 <div style="flex: 0 0 max-content">
+    <button mat-button (click)="archive()"><mat-icon>archive</mat-icon></button>
+    <button mat-button (click)="copy()"><mat-icon>content_copy</mat-icon></button>
+    <button mat-button (click)="paste()"><mat-icon>content_paste</mat-icon></button>
     <button mat-button [disabled]="!prompt.first" (click)="select(prompt.first)"><mat-icon>first_page</mat-icon></button>
     <button mat-button [disabled]="!prompt.prev" (click)="select(prompt.prev)"><mat-icon>chevron_left</mat-icon></button>
     <button mat-button [disabled]="!prompt.next" (click)="select(prompt.next)"><mat-icon>chevron_right</mat-icon></button>
