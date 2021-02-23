@@ -30,13 +30,13 @@ export class AutoinquirerBreadcrumbComponent implements PromptComponent, OnInit 
 
   paste() {
     const copySource = JSON.parse(localStorage.getItem('copySource'));
-    if (confirm(`Paste "${copySource.label}" to ${this.currentPath.value}?`)){
+    if (confirm(`Paste "${copySource.label}" to "${this.currentPath.label}"?`)){
       this.formlyService.paste(copySource, this.currentPath.value).toPromise().then(() => this.select(this.currentPath.value));
     }
   }
 
   archive() {
-    if (confirm(`Archive ${this.currentPath.label}?`)){
+    if (confirm(`Archive "${this.currentPath.label}"?`)){
       this.formlyService.rpc("archive", `/${this.currentPath.value}`, {}, {} ).toPromise().then((res) => {
         console.log(`Archive result`, res);
         //this.select(this.currentPath)
