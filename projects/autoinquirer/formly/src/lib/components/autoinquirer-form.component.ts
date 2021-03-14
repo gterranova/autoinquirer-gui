@@ -76,18 +76,23 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
 
   constructor(private formlyJsonschema: FormlyJsonschema) { }
 
-  private compactValues(myObj: any, excludeSameFrom: any = {}, required: string[] = []): any {
-    if (_.isArray(myObj)) {
-      return _.map(myObj, (o, idx) => this.compactValues(o, excludeSameFrom[idx]));
+  private compactValues(myObj: any, excludeSameFrom: any = {}, schema: any = {}): any {
+    if (myObj instanceof FileList) {
+      const isEqual = myObj.length == excludeSameFrom.length && _.every(_.map(myObj, (x, idx) => _.isEqual(_.pick(x, ['name', 'size']), _.pick(excludeSameFrom[idx], ['name', 'size']))));
+      if (!isEqual) {
+        return _.map(myObj, x => {return {..._.pick(x, ['name', 'size']), file: x}});
+      }
+    } else if (_.isArray(myObj)) {
+      return _.map(myObj, (o, idx) => this.compactValues(o, excludeSameFrom[idx], schema.items));
     } else if (myObj instanceof Date || myObj._isAMomentObject) {
       return myObj.toISOString();
     } else if (_.isObject(myObj)) {
-      return _.chain(myObj).map((value, key) => {
-        if (required && _.includes(required, key)) {
-          return [key, value];
+      return _.chain(_.keys(myObj)).map(key => {
+        if (schema.required && _.includes(schema.required, key)) {
+          return [key, myObj[key]];
         }
-        if (key !== undefined && key[0] !== '_' && value !== null && !_.isEqual(excludeSameFrom[key], value)) {
-          return [key, this.compactValues(value, excludeSameFrom[key])];
+        if (key[0] !== '_' && myObj[key] !== null && !(myObj[key] instanceof File) && !_.isEqual(excludeSameFrom[key], myObj[key])) {
+          return [key, this.compactValues(myObj[key], excludeSameFrom[key], schema.properties?.[key])];
         }
         return;
       }).filter().fromPairs().value()
@@ -115,18 +120,28 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
           return;
           //this.promptService.request(Action.SET, path+'/'+key, value).toPromise();
         }
+        if (testProperty?.type === 'file' && value.length) {
+          const formData: FormData = new FormData();
+          for (let i=0;i<value.length;i++) {
+            const fileToUpload = value[i].file;
+            formData.append('file', fileToUpload, fileToUpload.name);
+          }
+          this.callback('request', Action.UPLOAD, _.compact([path, key]).join('/'), formData, { /* do: 'formly' */ }).toPromise().then(response => {
+            last[key] = response.body;
+          });
+          return;
+        }
       }
       return [key, value];
     }).filter().fromPairs().value();
   }
 
   async handleUpdate(selectedValue) {
-    let cleaned = this.cleanFormData(this.compactValues(selectedValue, this.lastValues, this.prompt.schema.required), this.lastValues, this.prompt.schema, this.prompt.path);
-
+    let cleaned = this.cleanFormData(this.compactValues(selectedValue, this.lastValues, this.prompt.schema), this.lastValues, this.prompt.schema, this.prompt.path);
     if (this.callback && Object.keys(cleaned).length > 0) {
       this.callback('request', Action.UPDATE, this.prompt.path, cleaned).subscribe(
         newValue => {
-          const compact = this.compactValues(_.pick(newValue, _.keys(cleaned)), this.lastValues, this.prompt.schema.required);
+          const compact = this.compactValues(_.pick(newValue, _.keys(cleaned)), this.lastValues, this.prompt.schema);
           cleaned = this.cleanFormData(compact, this.lastValues, this.prompt.schema, this.prompt.path);
           this.form.patchValue(cleaned, { emitEvent: false });
           this.lastValues = _.merge(this.lastValues, cleaned);
@@ -152,7 +167,7 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
 
   ngOnInit() {
     this.fields = [this.formlyJsonschema.toFieldConfig(this.prompt.schema, { map: this.fieldMap(this.form) })];
-    this.lastValues = this.compactValues(this.prompt.model, {}, this.prompt.schema.required);
+    this.lastValues = this.compactValues(this.prompt.model, {}, this.prompt.schema);
     if (this.prompt.schema.type === 'object') {
       this.form.valueChanges.pipe(skip(1), filter(() => this.form.valid), debounceTime(1000)).subscribe({ next: this.handleUpdate.bind(this) });
     }

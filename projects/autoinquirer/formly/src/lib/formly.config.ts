@@ -13,6 +13,7 @@ import { AccordionWrapperComponent } from './wrappers/accordion.wrapper';
 import { FilesystemWrapperComponent } from './wrappers/filesystem.wrapper';
 import { FormlyFieldMaskedInput } from './types/masked-input.type';
 import { GroupsWrapperComponent } from './wrappers/groups.wrapper';
+import { FileTypeComponent } from './types/file.type';
 //import { MarkdownTypeComponent } from '../markdown/markdown.type';
 
 export function minItemsValidationMessage(err: any, field: FormlyFieldConfig) {
@@ -155,6 +156,7 @@ export const formlyConfig : ConfigOption = {
       { name: 'link', component: LinkTypeComponent },
       { name: 'button', component: ButtonTypeComponent },
       { name: 'masked-input', component: FormlyFieldMaskedInput, wrappers: ['form-field'] },
+      { name: 'file', component: FileTypeComponent, wrappers: ['form-field'] },
       //{ name: 'markdown', component: MarkdownTypeComponent },
     ],
     wrappers: [

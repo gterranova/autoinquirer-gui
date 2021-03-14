@@ -32,6 +32,8 @@ import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/
 import { DynamicComponentConfigOption, SharedModule } from '@autoinquirer/shared';
 
 import { AutoinquirerFormComponent } from './components/autoinquirer-form.component';
+import { FileTypeComponent } from './types/file.type';
+import { FileValueAccessor } from './directives/file-value-accessor';
 
 export function defaultDynamicComponentConfig(): DynamicComponentConfigOption {
   return {
@@ -64,6 +66,8 @@ const DYNAMIC_COMPONENTS = [
     ArrayPushDirective,
     ArrayDeleteDirective,
     FieldActionDirective,
+    FileTypeComponent,
+    FileValueAccessor,
     ...DYNAMIC_COMPONENTS,
   ],
   imports: [
