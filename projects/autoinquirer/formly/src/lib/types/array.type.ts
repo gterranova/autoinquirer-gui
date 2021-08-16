@@ -18,7 +18,10 @@ interface IArrayItem {
       <!-- label Column -->
       <ng-container matColumnDef="label">
         <th mat-header-cell *matHeaderCellDef> {{ to.label | safe:'html' }} </th>
-        <td mat-cell *matCellDef="let element" (click)="select(element)" style="cursor: pointer; width: 100%"> {{element.label | safe:'html'}} </td>
+        <td mat-cell *matCellDef="let element" (click)="select(element)" style="cursor: pointer; width: 100%"> 
+          <img *ngIf="element.iconUrl" [src]="element.iconUrl" width="32" height="32">
+          {{element.label | safe:'html'}} 
+        </td>
       </ng-container>
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> actions </th>
