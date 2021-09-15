@@ -26,10 +26,10 @@ export class ArrayPushDirective {
     this.promptService.request(Action.PUSH, this.to.path, {})
       .pipe( switchMap( () => this.update() ))
       .subscribe(model => {
-        this.onPushed?.emit(model[model.length - 1]);
         //console.log("should add", model[model.length-1], "to", this.model, (<FieldArrayType>this.field));
         this.model.push(model[model.length - 1]);
         (<any>this.field.options)._buildForm(true);
+        this.onPushed?.emit(model[model.length - 1]);
       });
   }
 

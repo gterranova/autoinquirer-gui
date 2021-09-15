@@ -30,7 +30,7 @@ export class FormlyService {
 
 
   navigate(path: string, queryParams = {}) {
-    this.router.navigate([...path.split('/')], { skipLocationChange: false, queryParams });
+    return this.router.navigate([...path.split('/')], { skipLocationChange: false, queryParams });
   }
 
   private createRequestHeader() {

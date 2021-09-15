@@ -3,6 +3,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Action, IServerResponse, FormlyService } from '@autoinquirer/shared';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { ViewportScroller } from '@angular/common';
 
 @Directive({
     selector: '[arrayDelete]'
@@ -12,7 +13,7 @@ import { catchError, map } from 'rxjs/operators';
     @Input('arrayIndex') idx: number;
     @Output() onDeleted : EventEmitter<number> = new EventEmitter<number>();
      
-    constructor(@Inject(FormlyService) private promptService: FormlyService) { }
+    constructor(@Inject(FormlyService) private promptService: FormlyService, private vs: ViewportScroller) { }
   
     update() {
       return this.promptService.request(Action.GET, this.to.path, { do: 'formly' }).pipe( map((formData: IServerResponse) => {
@@ -31,7 +32,13 @@ import { catchError, map } from 'rxjs/operators';
         //console.log("delete", {selection, idx: this.idx })
         this.promptService.request(Action.DELETE, selection.path).pipe( catchError( () => of([]))).subscribe( () => {
             //console.log({model: this.model });
-            this.onDeleted?.emit(this.idx);
+            if (this.to.groupBy) {
+              //console.log(this.to);
+              const scrollPos = this.vs.getScrollPosition();
+              this.promptService.navigate(this.to.path).then(_ => this.vs.scrollToPosition(scrollPos));
+            } else {
+              this.onDeleted?.emit(this.idx);
+            }
         });
       }
     }

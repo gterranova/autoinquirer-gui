@@ -55,11 +55,13 @@ export class ArrayTypeComponent extends FieldArrayType implements OnInit {
     this.dataSource.next(this.model);
     this.displayedColumns = (this.to.readonly)? ['label'] : ['label', 'actions'];
     this.topLevel = !this.field.parent?.parent;
-    this.formControl.valueChanges.pipe( map( (model: IArrayItem[]) => Array.isArray(model)? model : Object.values(model)) )
+    if (this.formControl) { // FIX: when in groups formControl is underfined
+      this.formControl.valueChanges.pipe( map( (model: IArrayItem[]) => Array.isArray(model)? model : Object.values(model)) )
       .subscribe( (model: IArrayItem[]) => {
         //console.log("model changed", model);
         this.dataSource.next(model);
       });
+    }
   }
 
   select(selection: IArrayItem) {
