@@ -13,7 +13,7 @@ import * as _ from 'lodash';
   styles: [`
   :host {
     display: block;
-    margin: 0 100px;
+    margin: 0 50px;
     /*border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 5px; */
   }

@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>{{sidenav.title}}</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-icon-button aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+    <button *ngIf="!(prompt.user?.email)" mat-button (click)="login()"><mat-icon>account_circle</mat-icon></button>
+    <mat-menu #appMenu="matMenu">
+        <ng-template matMenuContent let-name="name">
+          <button mat-menu-item>Settings</button>
+          <button mat-menu-item (click)="logout()">Log off {{name}}</button>
+        </ng-template>
+    </mat-menu>
+      
+    <button *ngIf="prompt.user?.email" mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{name: prompt.user.email}">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-drawer-container>
+    <mat-drawer #drawer class="drawer" mode="side" opened>
+        <mat-nav-list>
+            <a mat-list-item [routerLink]="[item.path]" *ngFor="let item of sidenav.items"> {{ item.title }} </a>
+        </mat-nav-list>         
+    </mat-drawer>
+    <mat-drawer-content>
+        <dynamic-component [callback]="callback" [prompt]="c" *ngFor="let c of prompt.children"></dynamic-component>
+    </mat-drawer-content>
+</mat-drawer-container>
+  
