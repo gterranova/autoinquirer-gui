@@ -42,28 +42,25 @@ const DYNAMIC_COMPONENTS = [
 
 
 @NgModule({
-  declarations: [
-    DynamicContainer,
-    DynamicComponent,
-    PromptHostDirective,
-    ...DYNAMIC_COMPONENTS,        
-  ],
-  entryComponents: [
-    ...DYNAMIC_COMPONENTS
-  ],
-  imports: [
-    CommonModule, 
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    RouterModule,
-    SharedModule,
-    MaterialModule.forRoot(),
-    MarkdownModule.forChild(),
-  ],
-  exports: []
+    declarations: [
+        DynamicContainer,
+        DynamicComponent,
+        PromptHostDirective,
+        ...DYNAMIC_COMPONENTS,
+    ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        SharedModule,
+        MaterialModule.forRoot(),
+        MarkdownModule.forChild(),
+    ],
+    exports: []
 })
 export class AutoinquirerCoreModule { 
   static forRoot(config: DynamicComponentConfigOption = {}): ModuleWithProviders<AutoinquirerCoreModule> {

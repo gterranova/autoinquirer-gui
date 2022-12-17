@@ -64,35 +64,32 @@ const DYNAMIC_COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [
-    ...DYNAMIC_COMPONENTS,
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormlyModule,
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    JwtModule
-  ],
-  entryComponents: [
-    ...DYNAMIC_COMPONENTS,
-  ],
-  exports: [
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    ...DYNAMIC_COMPONENTS,
-  ]
+    declarations: [
+        ...DYNAMIC_COMPONENTS,
+    ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        FormlyModule,
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        JwtModule
+    ],
+    exports: [
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        ...DYNAMIC_COMPONENTS,
+    ]
 })
 export class AuthModule {
   static forRoot(config: DynamicComponentConfigOption = {}): ModuleWithProviders<AuthModule> {

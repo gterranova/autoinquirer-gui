@@ -28,18 +28,6 @@
             "tsConfig": "projects/autoinquirer/formly/tsconfig.spec.json",
             "karmaConfig": "projects/autoinquirer/formly/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/autoinquirer/formly/tsconfig.lib.json",
-              "projects/autoinquirer/formly/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -191,18 +179,6 @@
             "tsConfig": "projects/autoinquirer/markdown/tsconfig.spec.json",
             "karmaConfig": "projects/autoinquirer/markdown/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/autoinquirer/markdown/tsconfig.lib.json",
-              "projects/autoinquirer/markdown/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -230,18 +206,6 @@
             "main": "projects/autoinquirer/auth/src/test.ts",
             "tsConfig": "projects/autoinquirer/auth/tsconfig.spec.json",
             "karmaConfig": "projects/autoinquirer/auth/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/autoinquirer/auth/tsconfig.lib.json",
-              "projects/autoinquirer/auth/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -271,18 +235,6 @@
             "tsConfig": "projects/autoinquirer/core/tsconfig.spec.json",
             "karmaConfig": "projects/autoinquirer/core/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/autoinquirer/core/tsconfig.lib.json",
-              "projects/autoinquirer/core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -310,18 +262,6 @@
             "main": "projects/autoinquirer/shared/src/test.ts",
             "tsConfig": "projects/autoinquirer/shared/tsconfig.spec.json",
             "karmaConfig": "projects/autoinquirer/shared/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/autoinquirer/shared/tsconfig.lib.json",
-              "projects/autoinquirer/shared/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

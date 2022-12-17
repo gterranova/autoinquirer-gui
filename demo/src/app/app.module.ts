@@ -60,34 +60,31 @@ export function markedOptionsFactory(): MarkedOptions {
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule, //
-    FormsModule, //
-    ReactiveFormsModule, //
-    AppRoutingModule,
-    HttpClientModule,
-    //SocketIoModule.forRoot(config),
-    BrowserAnimationsModule,
-    SharedModule.forRoot(),
-    MaterialModule.forRoot(),
-    AutoinquirerCoreModule.forRoot(),
-    AutoinquirerFormlyModule.forRoot(),
-    AuthModule.forRoot(),
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-      markedOptions: {
-        provide: MarkedOptions,
-        useFactory: markedOptionsFactory,
-      },
-      sanitize: SecurityContext.NONE,
-    }),
-  ],
-  entryComponents: [
-    //...DYNAMIC_COMPONENTS
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        //SocketIoModule.forRoot(config),
+        BrowserAnimationsModule,
+        SharedModule.forRoot(),
+        MaterialModule.forRoot(),
+        AutoinquirerCoreModule.forRoot(),
+        AutoinquirerFormlyModule.forRoot(),
+        AuthModule.forRoot(),
+        MarkdownModule.forRoot({
+            loader: HttpClient,
+            markedOptions: {
+                provide: MarkedOptions,
+                useFactory: markedOptionsFactory,
+            },
+            sanitize: SecurityContext.NONE,
+        }),
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
