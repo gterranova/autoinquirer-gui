@@ -7,11 +7,11 @@ const distDir = 'dist/@autoinquirer';
 
 // cleanup
 //exec(`rm -rf ${distDir}`);
-//rimraf.sync(distDir);
+rimraf.sync(distDir);
 
 PACKAGES.map((name) => {
   // build package
-  exec(name === 'schematics' ? `ts-node --dir build schematics.ts` : `ng build --prod @autoinquirer/${name}`);
+  exec(name === 'schematics' ? `ts-node --dir build schematics.ts` : `ng build @autoinquirer/${name} --configuration production`);
 
   const pkgDir = `${distDir}/${name}`;
   //exec(`cp README.md ${pkgDir}`);
