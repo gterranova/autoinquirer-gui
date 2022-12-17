@@ -94,6 +94,11 @@
                 "glob": "**/*",
                 "input": "node_modules/ace-builds/src-min",
                 "output": "./assets/ace-builds/"
+              },
+              {
+                "glob": "**/*",
+                "input": "assets",
+                "output": "./assets/"
               }
             ],
             "styles": [

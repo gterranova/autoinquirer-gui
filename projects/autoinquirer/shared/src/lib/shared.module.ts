@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material.module';
 
 import { FormlyService } from './formly.service';
 import { DYNAMIC_COMPONENT_CONFIG, DynamicComponentConfig } from './dynamic.component.config';
@@ -15,8 +16,12 @@ import { DYNAMIC_COMPONENT_CONFIG, DynamicComponentConfig } from './dynamic.comp
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MaterialModule.forChild()
   ],
-  providers: []
+  providers: [],
+  exports: [
+    MaterialModule
+  ]
 })
 export class SharedModule { 
 

@@ -7,7 +7,7 @@ const distDir = 'dist/@autoinquirer';
 
 // cleanup
 //exec(`rm -rf ${distDir}`);
-rimraf.sync(distDir);
+//rimraf.sync(distDir);
 
 PACKAGES.map((name) => {
   // build package

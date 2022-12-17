@@ -1,14 +1,14 @@
 import { execSync, ExecSyncOptions } from 'child_process';
 
 export const PACKAGES = [
-  'shared',
+  //'shared',
+  //'markdown',
   'core',
   //'schematics',
 
   // UI
-  'formly',
-  'auth',
-  'markdown',
+  //'formly',
+  //'auth',
 ];
 
 export function exec(cmd: string, options: ExecSyncOptions = { stdio: 'inherit' }) {

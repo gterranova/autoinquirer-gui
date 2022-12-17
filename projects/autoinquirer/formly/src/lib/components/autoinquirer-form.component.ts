@@ -141,6 +141,10 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
     if (this.callback && Object.keys(cleaned).length > 0) {
       this.callback('request', Action.UPDATE, this.prompt.path, cleaned).subscribe(
         newValue => {
+          //console.log(newValue);
+          if (newValue?.type == 'redirect' && newValue.url) {
+            return this.callback('navigate', newValue.url);
+          }
           const compact = this.compactValues(_.pick(newValue, _.keys(cleaned)), this.lastValues, this.prompt.schema);
           cleaned = this.cleanFormData(compact, this.lastValues, this.prompt.schema, this.prompt.path);
           this.form.patchValue(cleaned, { emitEvent: false });

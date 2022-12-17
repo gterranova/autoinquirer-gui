@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AutoinquirerCoreModule } from '@autoinquirer/core';
-import { SharedModule } from '@autoinquirer/shared';
+import { SharedModule, MaterialModule } from '@autoinquirer/shared';
 import { AutoinquirerFormlyModule } from '@autoinquirer/formly';
 import { AuthModule } from '@autoinquirer/auth';
 import { MarkdownModule } from '@autoinquirer/markdown';
@@ -25,6 +25,27 @@ export function markedOptionsFactory(): MarkedOptions {
 
   renderer.blockquote = (text: string) => {
     return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
+  };
+
+  renderer.table = (header: string, body: string) => {
+    return `<table class="table table-bordered">\n<thead>\n${header}</thead>\n<tbody>\n${body}</tbody>\n</table>\n`;
+  };
+
+  renderer.listitem = (text: any) => {
+    if (/^\s*\[[x ]\]\s*/.test(text)) {
+      text = text
+        .replace(
+          /^\s*\[ \]\s*/,
+          '<i class="fa fa-square-o" style="margin: 0 0.2em 0.25em -1.6em;"></i> '
+        )
+        .replace(
+          /^\s*\[x\]\s*/,
+          '<i class="fa fa-check-square" style="margin: 0 0.2em 0.25em -1.6em;"></i> '
+        );
+      return `<li style="list-style: none;">${text}</li>`;
+    } else {
+      return `<li>${text}</li>`;
+    }
   };
 
   return {
@@ -51,6 +72,7 @@ export function markedOptionsFactory(): MarkedOptions {
     //SocketIoModule.forRoot(config),
     BrowserAnimationsModule,
     SharedModule.forRoot(),
+    MaterialModule.forRoot(),
     AutoinquirerCoreModule.forRoot(),
     AutoinquirerFormlyModule.forRoot(),
     AuthModule.forRoot(),
@@ -60,6 +82,7 @@ export function markedOptionsFactory(): MarkedOptions {
         provide: MarkedOptions,
         useFactory: markedOptionsFactory,
       },
+      sanitize: SecurityContext.NONE,
     }),
   ],
   entryComponents: [

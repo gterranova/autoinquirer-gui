@@ -7,23 +7,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatIconModule } from '@angular/material/icon'; 
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav'; 
-import { MatListModule } from '@angular/material/list';
-import { MatToolbarModule } from '@angular/material/toolbar';
-
 import { DynamicContainer, DynamicComponent, PromptHostDirective, DynamicLayoutComponent } from './components';
 import { AutoinquirerBreadcrumbComponent } from './components/autoinquirer-breadcrumb/autoinquirer-breadcrumb.component';
 import { AutoinquirerSidenavComponent } from './components/autoinquirer-sidenav/autoinquirer-sidenav.component';
+import { AutoinquirerMarkdownComponent } from './components/autoinquirer-markdown/autoinquirer-markdown.component';
 import { DynamicEmptyComponent, DynamicRedirectComponent } from './components/dynamic.component';
 
 import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/shared';
+import { MarkdownModule } from '@autoinquirer/markdown';
 
-
-import { DynamicComponentConfigOption, SharedModule } from '@autoinquirer/shared';
+import { DynamicComponentConfigOption, SharedModule, MaterialModule } from '@autoinquirer/shared';
 import { RouterModule } from '@angular/router';
 
 export function defaultDynamicComponentConfig(): DynamicComponentConfigOption {
@@ -32,6 +25,7 @@ export function defaultDynamicComponentConfig(): DynamicComponentConfigOption {
       { name: 'layout', component: DynamicLayoutComponent },
       { name: 'breadcrumb', component: AutoinquirerBreadcrumbComponent },
       { name: 'sidenav', component: AutoinquirerSidenavComponent },
+      { name: 'markdown', component: AutoinquirerMarkdownComponent },
       { name: 'redirect', component: DynamicRedirectComponent },      
     ]
   };
@@ -40,6 +34,7 @@ export function defaultDynamicComponentConfig(): DynamicComponentConfigOption {
 const DYNAMIC_COMPONENTS = [
   AutoinquirerBreadcrumbComponent,
   AutoinquirerSidenavComponent,
+  AutoinquirerMarkdownComponent,
   DynamicLayoutComponent,
   DynamicEmptyComponent,
   DynamicRedirectComponent,
@@ -63,15 +58,10 @@ const DYNAMIC_COMPONENTS = [
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule,
     RouterModule,
     SharedModule,
+    MaterialModule.forRoot(),
+    MarkdownModule.forChild(),
   ],
   exports: []
 })

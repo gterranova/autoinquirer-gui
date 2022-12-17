@@ -11,6 +11,7 @@ import { MarkdownTypeComponent } from './markdown.type';
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SharedModule, MaterialModule } from '@autoinquirer/shared';
 
 // having a dependency on `HttpClientModule` within a library
 // breaks all the interceptors from the app consuming the library
@@ -35,6 +36,8 @@ const sharedDeclarations = [
     FormsModule,
     MatFormFieldModule,
     LMarkdownEditorModule,
+    SharedModule, 
+    MaterialModule.forChild(),
     FormlyModule.forChild({
       types: [{ name: 'markdown', component: MarkdownTypeComponent }],
     })

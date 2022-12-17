@@ -7,8 +7,6 @@ import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 
 import { formlyConfig } from './formly.config';
 
-import { MaterialModule } from './material.module';
-
 import { NullTypeComponent } from './types/null.type';
 import { ArrayTypeComponent } from './types/array.type';
 import { ObjectTypeComponent } from './types/object.type';
@@ -29,7 +27,7 @@ import { FieldActionDirective } from './directives/field-action.directive';
 import { SafePipe } from './safe.pipe';
 
 import { DynamicComponentConfig, DYNAMIC_COMPONENT_CONFIG } from '@autoinquirer/shared';
-import { DynamicComponentConfigOption, SharedModule } from '@autoinquirer/shared';
+import { DynamicComponentConfigOption, SharedModule, MaterialModule } from '@autoinquirer/shared';
 
 import { AutoinquirerFormComponent } from './components/autoinquirer-form.component';
 import { FileTypeComponent } from './types/file.type';
@@ -74,12 +72,12 @@ const DYNAMIC_COMPONENTS = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
     FormlyModule.forRoot(formlyConfig),
     FormlyMaterialModule,
     NgxMaskModule.forRoot(),
     FormlyMatDatepickerModule,
     SharedModule,
+    MaterialModule.forChild(),
   ],
   entryComponents: [
     ...DYNAMIC_COMPONENTS,
@@ -88,7 +86,6 @@ const DYNAMIC_COMPONENTS = [
     FormlyModule,
     FormlyMaterialModule,
     FormlyMatDatepickerModule,
-    MaterialModule,
     ...DYNAMIC_COMPONENTS,
   ]
 })

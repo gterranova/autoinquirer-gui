@@ -29,6 +29,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { 
+    anchorScrolling: 'enabled',
     onSameUrlNavigation: 'reload', 
     urlUpdateStrategy: 'deferred',
     scrollPositionRestoration: "top" 
