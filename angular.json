@@ -266,6 +266,5 @@
         }
       }
     }
-  },
-  "defaultProject": "@autoinquirer/core"
+  }
 }

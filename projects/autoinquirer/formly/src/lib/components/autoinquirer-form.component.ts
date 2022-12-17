@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PromptComponent, PromptCallbackType, Action, IProperty } from '@autoinquirer/shared';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { debounceTime, skip, filter, startWith, map, tap } from 'rxjs/operators';
@@ -34,9 +34,9 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
   lastValues: any;
   callback: PromptCallbackType;
 
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
 
-  fieldMap(form: FormGroup) {
+  fieldMap(form: UntypedFormGroup) {
     return (mappedField: FormlyFieldConfig, mapSource: any) => {
       if (!mappedField.templateOptions) { mappedField.templateOptions = {}; }
       mappedField.templateOptions.disabled = mappedField.templateOptions.disabled || mapSource.readOnly;

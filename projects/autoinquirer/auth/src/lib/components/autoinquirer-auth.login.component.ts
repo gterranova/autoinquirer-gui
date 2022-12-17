@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { Router } from '@angular/router';
 import { PromptComponent, IServerResponse, PromptCallbackType } from '@autoinquirer/shared';
 import { AuthService } from '../services/auth.service';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { startWith, map, tap } from 'rxjs/operators';
@@ -51,7 +51,7 @@ export class AutoinquirerAuthLoginComponent implements PromptComponent, OnInit {
   prompt: any = {};
   user: User = { email: '', password: '' };
   loading = false;
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
   fields: FormlyFieldConfig[] = [];
   callback: PromptCallbackType;
   
@@ -63,7 +63,7 @@ export class AutoinquirerAuthLoginComponent implements PromptComponent, OnInit {
       private cdref: ChangeDetectorRef
     ) { }
 
-  fieldMap(form: FormGroup) {
+  fieldMap(form: UntypedFormGroup) {
     return (mappedField: FormlyFieldConfig, mapSource: any) => {
       if (!mappedField.templateOptions) { mappedField.templateOptions = {}; }
       mappedField.templateOptions.disabled = mappedField.templateOptions.disabled || mapSource.readOnly;

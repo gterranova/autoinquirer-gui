@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PromptComponent, PromptCallbackType } from '@autoinquirer/shared';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { AuthService } from '../services/auth.service';
@@ -51,7 +51,7 @@ export class AutoinquirerAuthActivateComponent implements OnInit, PromptComponen
   user: UserActivation = { code: '' };
   submittedCode: string;
   loading = false;
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
   fields: FormlyFieldConfig[] = [];
   callback: PromptCallbackType;
   
