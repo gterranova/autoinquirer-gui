@@ -65,7 +65,6 @@
           "skipTests": true
         },
         "@schematics/angular:module": {
-          "skipTests": true
         },
         "@schematics/angular:pipe": {
           "skipTests": true
@@ -86,7 +85,6 @@
             "main": "demo/src/main.ts",
             "polyfills": "demo/src/polyfills.ts",
             "tsConfig": "demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "demo/src/favicon.ico",
               "demo/src/assets",
@@ -110,7 +108,13 @@
             "scripts": [
               "node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",
               "node_modules/ngx-markdown-editor/assets/marked.min.js"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -140,7 +144,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
