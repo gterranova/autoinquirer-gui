@@ -17,43 +17,43 @@ import { FileTypeComponent } from './types/file.type';
 //import { MarkdownTypeComponent } from '../markdown/markdown.type';
 
 export function minItemsValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should NOT have fewer than ${field.templateOptions?.minItems} items`;
+  return `should NOT have fewer than ${field.props?.minItems} items`;
 }
 
 export function maxItemsValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should NOT have more than ${field.templateOptions?.maxItems} items`;
+  return `should NOT have more than ${field.props?.maxItems} items`;
 }
 
 export function minlengthValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should NOT be shorter than ${field.templateOptions?.minLength} characters`;
+  return `should NOT be shorter than ${field.props?.minLength} characters`;
 }
 
 export function maxlengthValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should NOT be longer than ${field.templateOptions?.maxLength} characters`;
+  return `should NOT be longer than ${field.props?.maxLength} characters`;
 }
 
 export function minValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should be >= ${field.templateOptions?.min}`;
+  return `should be >= ${field.props?.min}`;
 }
 
 export function maxValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should be <= ${field.templateOptions?.max}`;
+  return `should be <= ${field.props?.max}`;
 }
 
 export function multipleOfValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should be multiple of ${field.templateOptions?.step}`;
+  return `should be multiple of ${field.props?.step}`;
 }
 
 export function exclusiveMinimumValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should be > ${field.templateOptions?.step}`;
+  return `should be > ${field.props?.step}`;
 }
 
 export function exclusiveMaximumValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should be < ${field.templateOptions?.step}`;
+  return `should be < ${field.props?.step}`;
 }
 
 export function constValidationMessage(err: any, field: FormlyFieldConfig) {
-  return `should be equal to constant "${field.templateOptions?.const}"`;
+  return `should be equal to constant "${field.props?.const}"`;
 }
 
 export function patternValidationMessage(err: any, field: FormlyFieldConfig) {
@@ -112,7 +112,7 @@ export const formlyConfig : ConfigOption = {
         name: 'number',
         extends: 'input',
         defaultOptions: {
-          templateOptions: {
+          props: {
             type: 'number',
           },
         },
@@ -121,7 +121,7 @@ export const formlyConfig : ConfigOption = {
         name: 'integer',
         extends: 'input',
         defaultOptions: {
-          templateOptions: {
+          props: {
             type: 'number',
           },
         },
@@ -130,7 +130,7 @@ export const formlyConfig : ConfigOption = {
         name: 'password',
         extends: 'input',
         defaultOptions: {
-          templateOptions: {
+          props: {
             type: 'password',
           },
         },
@@ -139,7 +139,7 @@ export const formlyConfig : ConfigOption = {
         name: 'email',
         extends: 'input',
         defaultOptions: {
-          templateOptions: {
+          props: {
             type: 'email',
           },
           validators: {

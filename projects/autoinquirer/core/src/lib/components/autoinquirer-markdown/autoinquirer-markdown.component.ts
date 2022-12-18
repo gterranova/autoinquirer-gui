@@ -16,8 +16,7 @@ export class AutoinquirerMarkdownComponent implements PromptComponent, OnInit, A
 
   constructor(
     private element: ElementRef<HTMLElement>,
-    public markdownService: MarkdownService,  
-    private sanitizer: DomSanitizer  
+    public markdownService: MarkdownService
   ) { }
   
   ngOnInit() {
@@ -34,12 +33,15 @@ export class AutoinquirerMarkdownComponent implements PromptComponent, OnInit, A
       var linkEl = links.item(linkIndex);
       const href = linkEl.getAttribute('href');
       // Ignore links that don't begin with #
-      if (!href || !href.match(/^#/)) {
+      if (!href || href.startsWith("http://")) {
         continue;
+      } else if (href.match(/^#/)) {
+        linkEl.addEventListener('click', this.onAnchorClick.bind(this));
+      } else {
+        linkEl.addEventListener('click', this.onNavigate.bind(this));
       }
   
       // Convert to an absolute URL
-      linkEl.addEventListener('click', this.onClick.bind(this));
     }
   }
 
@@ -54,9 +56,14 @@ export class AutoinquirerMarkdownComponent implements PromptComponent, OnInit, A
     const targetElement = document.querySelector('#' + fragment);
     targetElement.scrollIntoView();
   }  
-  onClick(event) {
+  onAnchorClick(event) {
     event.stopPropagation();
     event.preventDefault();
     this.scrollTo(event.target.href.split('#')[1].trim());
+  }  
+  onNavigate(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.callback('navigate', event.target.getAttribute('href').split('?')[0].trim(), { do: 'page' });
   }  
 }

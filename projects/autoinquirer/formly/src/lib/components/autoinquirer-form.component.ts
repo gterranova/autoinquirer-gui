@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PromptComponent, PromptCallbackType, Action, IProperty } from '@autoinquirer/shared';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { debounceTime, skip, filter, startWith, map, tap } from 'rxjs/operators';
@@ -34,26 +34,26 @@ export class AutoinquirerFormComponent implements PromptComponent, OnInit {
   lastValues: any;
   callback: PromptCallbackType;
 
-  form = new UntypedFormGroup({});
+  form = new FormGroup({});
 
-  fieldMap(form: UntypedFormGroup) {
+  fieldMap(form: FormGroup) {
     return (mappedField: FormlyFieldConfig, mapSource: any) => {
-      if (!mappedField.templateOptions) { mappedField.templateOptions = {}; }
-      mappedField.templateOptions.disabled = mappedField.templateOptions.disabled || mapSource.readOnly;
-      if (mappedField.templateOptions.groupBy) {
-        const groupField = mappedField.templateOptions.groupBy;
+      if (!mappedField.props) { mappedField.props = {}; }
+      mappedField.props.disabled = mappedField.props.disabled || mapSource.readOnly;
+      if (mappedField.props.groupBy) {
+        const groupField = mappedField.props.groupBy;
         mappedField.hooks = {
           onInit: field => {
             if (field) {
-              if (!field.templateOptions) { field.templateOptions = {}; }
-              const selectOptionsData = [...(<any[]>mappedField.templateOptions?.options || [])];
+              if (!field.props) { field.props = {}; }
+              const selectOptionsData = [...(<any[]>mappedField.props?.options || [])];
               const depField = form.get(groupField);
-              field.templateOptions.options = depField?.valueChanges.pipe(
+              field.props.options = depField?.valueChanges.pipe(
                 startWith(depField.value),
                 map(depFieldId => selectOptionsData.filter(o => o[`${groupField}Id`] === depFieldId)),
                 tap((options) => {
                   const optionValues = options.map(o => o.value);
-                  if (field.templateOptions.multiple) {
+                  if (field.props.multiple) {
                     const currentValue: string[] = field.formControl?.value || [];
                     field.formControl?.setValue(currentValue.filter( v => _.includes(optionValues, v)));
                   } else if (!_.includes(optionValues, field.formControl?.value)) {

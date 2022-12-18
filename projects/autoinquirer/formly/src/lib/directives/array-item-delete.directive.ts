@@ -43,7 +43,7 @@ import { ViewportScroller } from '@angular/common';
       }
     }
     
-    get to() { return this.field.templateOptions || {}; }  
+    get to() { return this.field.props || {}; }  
     get model() { return this.field.model || []; }  
   }
   

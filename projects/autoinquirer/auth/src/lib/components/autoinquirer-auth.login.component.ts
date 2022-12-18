@@ -65,17 +65,17 @@ export class AutoinquirerAuthLoginComponent implements PromptComponent, OnInit {
 
   fieldMap(form: UntypedFormGroup) {
     return (mappedField: FormlyFieldConfig, mapSource: any) => {
-      if (!mappedField.templateOptions) { mappedField.templateOptions = {}; }
-      mappedField.templateOptions.disabled = mappedField.templateOptions.disabled || mapSource.readOnly;
-      if (mappedField.templateOptions.groupBy) {
-        const groupField = mappedField.templateOptions.groupBy;
+      if (!mappedField.props) { mappedField.props = {}; }
+      mappedField.props.disabled = mappedField.props.disabled || mapSource.readOnly;
+      if (mappedField.props.groupBy) {
+        const groupField = mappedField.props.groupBy;
         mappedField.hooks =  {
           onInit: field => {
             if (field) {
-              if (!field.templateOptions) { field.templateOptions = {}; }
-              const selectOptionsData = [...(<any[]>mappedField.templateOptions?.options || []) ];
+              if (!field.props) { field.props = {}; }
+              const selectOptionsData = [...(<any[]>mappedField.props?.options || []) ];
               const depField = form.get(groupField);
-              field.templateOptions.options = depField?.valueChanges.pipe(
+              field.props.options = depField?.valueChanges.pipe(
                 startWith(depField.value),
                 map(depFieldId => selectOptionsData.filter(o => o[`${groupField}Id`] === depFieldId)),
                 tap((options) => {

@@ -19,7 +19,7 @@ export class FieldActionDirective {
     this.promptService.navigate(this.to.path, { do: this.action });
   }
 
-  get to() { return this.field.templateOptions || {}; }
+  get to() { return this.field.props || {}; }
   get model() { return this.field.model || []; }
 }
 
